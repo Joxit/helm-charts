@@ -1,0 +1,28 @@
+apiVersion: v2
+name: docker-registry-ui
+version: 0.1.0
+appVersion: "2.2.1"
+kubeVersion: ">=1.19.0-0"
+description: The simplest and most complete UI for your private registry
+home: https://github.com/Joxit/docker-registry-ui
+keywords:
+- docker
+- registry
+sources:
+- https://github.com/Joxit/docker-registry-ui
+- https://github.com/Joxit/helm-charts
+annotations:
+  artifacthub.io/prerelease: false
+  artifacthub.io/images: |
+    - name: docker-registry-ui
+      image: joxit/docker-registry-ui:2.2.1
+    - name: registry
+      image: registry:2.8.1
+  artifacthub.io/license: MIT
+  artifacthub.io/links: |
+    - name: Documentation
+      url: https://joxit.dev/docker-registry-ui
+    - name: Joxit/docker-registry-ui
+      url: https://github.com/Joxit/docker-registry-ui
+    - name: Joxit/helm-charts
+      url: https://github.com/Joxit/helm-charts
