@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "docker-registry-ui.fullname" . }}-ui
+  labels:
+    app: {{ template "docker-registry-ui.name" . }}
+    chart: {{ template "docker-registry-ui.chart" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    component: user-interface
+spec:
+  replicas: {{ .Values.ui.replicas }}
+  selector:
+    matchLabels:
+      app: {{ template "docker-registry-ui.name" . }}
+      chart: {{ template "docker-registry-ui.chart" . }}
+      heritage: {{ .Release.Service }}
+      release: {{ .Release.Name }}
+      component: user-interface
+  template:
+    metadata:
+      labels:
+        app: {{ template "docker-registry-ui.name" . }}
+        chart: {{ template "docker-registry-ui.chart" . }}
+        heritage: {{ .Release.Service }}
+        release: {{ .Release.Name }}
+        component: user-interface
+    spec:
+    {{ if ne (.Values.ui.imagePullSecrets | toString) "-" }}
+      imagePullSecrets:
+        {{- toYaml .Values.ui.imagePullSecrets | nindent 8 }}
+    {{ else }}
+      imagePullSecrets:
+        {{- toYaml .Values.global.imagePullSecrets | nindent 8 }}
+    {{ end}}
+      containers:
+        - name: "registry-ui"
+          image: {{ .Values.ui.image | quote }}
+          imagePullPolicy: {{ if ne (.Values.ui.imagePullPolicy | toString) "-" }}{{ .Values.ui.imagePullPolicy }}{{ else }}{{ .Values.global.imagePullPolicy }}{{ end }}
+          env:
+            - name: REGISTRY_TITLE
+              value: {{ .Values.ui.title | quote }}
+            - name: DELETE_IMAGES
+              value: {{ .Values.ui.deleteImages | quote }}
+            {{- if .Values.ui.proxy }}
+            - name: NGINX_PROXY_PASS_URL
+              value: ""
+            {{- else }}
+            - name: REGISTRY_URL
+              value: ""
+            {{- end }}
+            {{- if .Values.ui.pullUrl }}
+            - name: PULL_URL
+              value: {{ include "docker-registry-ui.pullUrl" . | quote }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.ui.service.port }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.ui.resources | nindent 12 }}
+      {{- with .Values.ui.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 | trim }}
+      {{- end }}
+    {{- with .Values.ui.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 | trim }}
+    {{- end }}
+    {{- with .Values.ui.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 | trim }}
+    {{- end }}

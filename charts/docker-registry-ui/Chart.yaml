@@ -12,7 +12,7 @@ sources:
 - https://github.com/Joxit/docker-registry-ui
 - https://github.com/Joxit/helm-charts
 annotations:
-  artifacthub.io/prerelease: false
+  artifacthub.io/prerelease: "false"
   artifacthub.io/images: |
     - name: docker-registry-ui
       image: joxit/docker-registry-ui:2.2.1

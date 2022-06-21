@@ -1,4 +1,7 @@
 global:
+  # Set the prefix used for all resources in the Helm chart. If not set,
+  # the prefix will be `<helm release name>`.
+  name: null
   # The default array of objects containing image pull secret names that will be applied.
   imagePullSecrets: []
   # The default image policy for images: IfNotPresent, Always, Never
@@ -7,12 +10,14 @@ global:
 ui:
   # Number of replicas for the Deployment.
   replicas: 1
-  # title of the registry
+  # Title of the registry
   title: "Docker registry UI"
-  # allow delete of images
-  delete_images: false
+  # Allow delete of images
+  deleteImages: false
   # UI behave as a proxy of the registry
   proxy: false
+  # Override the pull URL
+  pullUrl: null
   # The name and tag of the docker image of the interface
   image: joxit/docker-registry-ui:2.2.1
   # Override default image pull secrets 
