@@ -42,8 +42,10 @@ ui:
     # Type of service: LoadBalancer, ClusterIP or NodePort. If using NodePort service
     # type, you must set the desired `nodePorts` setting below.
     type: ClusterIP
-    # Ports that will be exposed on the service and container
+    # Ports that will be exposed on the service
     port: 80
+    # The port to listhen on the container. If under 1024, the user must be root
+    targetPort: 80
     # If using a NodePort service type, you must specify the desired nodePort for each exposed port.
     nodePort: null
     # Annotations to apply to the user interface service.

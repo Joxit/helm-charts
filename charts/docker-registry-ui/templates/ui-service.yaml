@@ -12,9 +12,12 @@ spec:
   type: {{ .Values.ui.service.type }}
   ports:
     - port: {{ .Values.ui.service.port }}
-      targetPort: http
+      targetPort: {{ .Values.ui.service.targetPort }}
       protocol: TCP
       name: http
+      {{- if (and (eq .Values.ui.service.type "NodePort") .Values.ui.service.nodePort) }}
+      nodePort: {{ .Values.ui.service.nodePort }}
+      {{- end }}
   selector:
     app: {{ template "docker-registry-ui.name" . }}
     chart: {{ template "docker-registry-ui.chart" . }}
