@@ -28,3 +28,16 @@ Expand the name of the chart.
 {{- define "docker-registry-ui.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{/*
+Common labels.
+*/}}
+{{- define "docker-registry-ui.labels" -}}
+app.kubernetes.io/name: {{ include "docker-registry-ui.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+helm.sh/chart: {{ include "docker-registry-ui.chart" . }}
+{{- end -}}

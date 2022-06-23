@@ -1,38 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "docker-registry-ui.fullname" . }}-ui
+  name: {{ include "docker-registry-ui.fullname" . }}-user-iterface
   labels:
-    app: {{ template "docker-registry-ui.name" . }}
-    chart: {{ template "docker-registry-ui.chart" . }}
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    component: user-interface
+    app.kubernetes.io/component	: user-interface
+    {{- include "docker-registry-ui.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.ui.replicas }}
   selector:
     matchLabels:
-      app: {{ template "docker-registry-ui.name" . }}
-      chart: {{ template "docker-registry-ui.chart" . }}
-      heritage: {{ .Release.Service }}
-      release: {{ .Release.Name }}
-      component: user-interface
+      app.kubernetes.io/component	: user-interface
+      {{- include "docker-registry-ui.labels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        app: {{ template "docker-registry-ui.name" . }}
-        chart: {{ template "docker-registry-ui.chart" . }}
-        heritage: {{ .Release.Service }}
-        release: {{ .Release.Name }}
-        component: user-interface
+        app.kubernetes.io/component	: user-interface
+        {{- include "docker-registry-ui.labels" . | nindent 8 }}
     spec:
-    {{ if ne (.Values.ui.imagePullSecrets | toString) "-" }}
+    {{- if ne (.Values.ui.imagePullSecrets | toString) "-" }}
       imagePullSecrets:
         {{- toYaml .Values.ui.imagePullSecrets | nindent 8 }}
-    {{ else }}
+    {{- else }}
       imagePullSecrets:
         {{- toYaml .Values.global.imagePullSecrets | nindent 8 }}
-    {{ end}}
+    {{- end}}
       containers:
         - name: "registry-ui"
           image: {{ .Values.ui.image | quote }}

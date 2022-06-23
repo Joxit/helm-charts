@@ -3,11 +3,8 @@ kind: Service
 metadata:
   name: {{ include "docker-registry-ui.fullname" . }}-ui
   labels:
-    app: {{ template "docker-registry-ui.name" . }}
-    chart: {{ template "docker-registry-ui.chart" . }}
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    component: user-interface
+    app.kubernetes.io/component	: user-interface
+    {{- include "docker-registry-ui.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.ui.service.type }}
   ports:
@@ -19,8 +16,5 @@ spec:
       nodePort: {{ .Values.ui.service.nodePort }}
       {{- end }}
   selector:
-    app: {{ template "docker-registry-ui.name" . }}
-    chart: {{ template "docker-registry-ui.chart" . }}
-    heritage: {{ .Release.Service }}
-    release: {{ .Release.Name }}
-    component: user-interface
+    app.kubernetes.io/component	: user-interface
+    {{- include "docker-registry-ui.labels" . | nindent 4 }}
