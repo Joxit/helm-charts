@@ -35,10 +35,10 @@ spec:
               value: {{ .Values.ui.deleteImages | quote }}
             {{- if .Values.ui.proxy }}
             - name: NGINX_PROXY_PASS_URL
-              value: ""
+              value: {{ .Values.ui.dockerRegistryUrl }}
             {{- else }}
             - name: REGISTRY_URL
-              value: ""
+              value: {{ .Values.ui.dockerRegistryUrl }}
             {{- end }}
             {{- if .Values.ui.pullUrl }}
             - name: PULL_URL
