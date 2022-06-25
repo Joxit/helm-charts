@@ -18,3 +18,6 @@ spec:
   selector:
     app.kubernetes.io/component	: user-interface
     {{- include "docker-registry-ui.labels" . | nindent 4 }}
+  {{- if .Values.ui.service.additionalSpec }}
+    {{ tpl .Values.ui.service.additionalSpec . | nindent 2 | trim }}
+  {{- end }}

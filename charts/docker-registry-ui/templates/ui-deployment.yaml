@@ -16,6 +16,10 @@ spec:
       labels:
         app.kubernetes.io/component	: user-interface
         {{- include "docker-registry-ui.labels" . | nindent 8 }}
+      {{- if .Values.ui.annotations }}
+      annotations:
+        {{- toYaml .Values.ui.annotations | nindent 8 | trim }}
+      {{- end }}
     spec:
     {{- if ne (.Values.ui.imagePullSecrets | toString) "-" }}
       imagePullSecrets:
@@ -35,14 +39,14 @@ spec:
               value: {{ .Values.ui.deleteImages | quote }}
             {{- if .Values.ui.proxy }}
             - name: NGINX_PROXY_PASS_URL
-              value: {{ .Values.ui.dockerRegistryUrl }}
+              value: {{ .Values.ui.dockerRegistryUrl | quote }}
             {{- else }}
             - name: REGISTRY_URL
-              value: {{ .Values.ui.dockerRegistryUrl }}
+              value: {{ .Values.ui.dockerRegistryUrl | quote }}
             {{- end }}
             {{- if .Values.ui.pullUrl }}
             - name: PULL_URL
-              value: {{ include "docker-registry-ui.pullUrl" . | quote }}
+              value: {{ .Values.ui.pullUrl | quote }}
             {{- end }}
           ports:
             - name: http
@@ -61,4 +65,7 @@ spec:
     {{- with .Values.ui.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 | trim }}
+    {{- end }}
+    {{- if .Values.ui.additionalSpec }}
+      {{ tpl .Values.ui.additionalSpec . | nindent 6 | trim }}
     {{- end }}
