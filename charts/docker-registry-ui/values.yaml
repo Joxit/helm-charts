@@ -20,6 +20,12 @@ ui:
   dockerRegistryUrl: null
   # Override the pull URL
   pullUrl: null
+  # Show number of tags per images on catalog page. This will produce + nb images requests, not recommended on large registries.
+  showCatalogNbTags: false
+  # Show content digest in docker tag list.
+  showContentDigest: false
+  # Remove the menu that show the dialogs to add, remove and change the endpoint of your docker registry.
+  singleRegistry: true
   # The name and tag of the docker image of the interface
   image: joxit/docker-registry-ui:2.2.1
   # Override default image pull secrets 
