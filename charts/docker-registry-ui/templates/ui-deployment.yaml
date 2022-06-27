@@ -44,22 +44,18 @@ spec:
             - name: REGISTRY_URL
               value: {{ .Values.ui.dockerRegistryUrl | quote }}
             {{- end }}
-            {{- if .Values.ui.pullUrl }}
             - name: PULL_URL
               value: {{ .Values.ui.pullUrl | quote }}
-            {{- end }}
-            {{- if .Values.ui.showCatalogNbTags }}
             - name: SHOW_CATALOG_NB_TAGS
               value: {{ .Values.ui.showCatalogNbTags | quote }}
-            {{- end }}
-            {{- if .Values.ui.showContentDigest }}
             - name: SHOW_CONTENT_DIGEST
               value: {{ .Values.ui.showContentDigest | quote }}
-            {{- end }}
-            {{- if .Values.ui.singleRegistry }}
             - name: SINGLE_REGISTRY
               value: {{ .Values.ui.singleRegistry | quote }}
-            {{- end }}
+            - name: CATALOG_ELEMENTS_LIMIT
+              value: {{ .Values.ui.catalogElementsLimit | quote }}
+            - name: HISTORY_CUSTOM_LABELS
+              value: {{ .Values.ui.historyCustomLabels | join "," }}
           ports:
             - name: http
               containerPort: {{ .Values.ui.service.targetPort }}

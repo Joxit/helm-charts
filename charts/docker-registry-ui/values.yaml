@@ -26,6 +26,10 @@ ui:
   showContentDigest: false
   # Remove the menu that show the dialogs to add, remove and change the endpoint of your docker registry.
   singleRegistry: true
+  # Limit the number of elements in the catalog page.
+  catalogElementsLimit: 100000
+  # Expose custom labels in history page, custom labels will be processed like maintainer label.
+  historyCustomLabels: []
   # The name and tag of the docker image of the interface
   image: joxit/docker-registry-ui:2.2.1
   # Override default image pull secrets 
