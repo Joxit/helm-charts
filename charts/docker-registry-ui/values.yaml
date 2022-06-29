@@ -30,6 +30,15 @@ ui:
   catalogElementsLimit: 100000
   # Expose custom labels in history page, custom labels will be processed like maintainer label.
   historyCustomLabels: []
+  # Update the default Nginx configuration and **set custom headers** for your backend docker registry. Only when `ui.proxy` is used.
+  # Example:
+  # nginxProxyHeaders:
+  #  - my-heeader-name: my-header-value
+  nginxProxyHeaders: []
+  # Update the default Nginx configuration and **forward custom headers** to your backend docker registry. Only when `ui.proxy` is used.
+  # Example:
+  # nginxProxyPassHeaders: [ my-first-header, my-second-header ]
+  nginxProxyPassHeaders: []
   # The name and tag of the docker image of the interface
   image: joxit/docker-registry-ui:2.2.1
   # Override default image pull secrets 

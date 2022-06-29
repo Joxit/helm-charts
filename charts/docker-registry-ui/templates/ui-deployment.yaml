@@ -40,6 +40,15 @@ spec:
             {{- if .Values.ui.proxy }}
             - name: NGINX_PROXY_PASS_URL
               value: {{ .Values.ui.dockerRegistryUrl | quote }}
+            {{- range $header := .Values.ui.nginxProxyHeaders }}
+            {{- range $key, $value := $header }}
+            - name: {{ printf "NGINX_PROXY_HEADER_%s" $key }}
+              value: {{ $value }}
+            {{- end }}
+            {{- end }}
+            {{- range $header := .Values.ui.nginxProxyPassHeaders }}
+            - name: {{ printf "NGINX_PROXY_PASS_HEADER_%s" $header }}
+            {{- end }}
             {{- else }}
             - name: REGISTRY_URL
               value: {{ .Values.ui.dockerRegistryUrl | quote }}
