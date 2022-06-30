@@ -1,3 +1,7 @@
+{{- if and (not .Values.ui.runAsRoot) (lt (.Values.ui.service.targetPort | int) 1024) }}
+{{ fail "When `ui.runAsRoot` is false `ui.service.targetPort` must be less than 1024." }}
+{{- end }}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -65,6 +69,8 @@ spec:
               value: {{ .Values.ui.catalogElementsLimit | quote }}
             - name: HISTORY_CUSTOM_LABELS
               value: {{ .Values.ui.historyCustomLabels | join "," }}
+            - name: NGINX_LISTEN_PORT
+              value: {{ .Values.ui.service.targetPort | quote }}
           ports:
             - name: http
               containerPort: {{ .Values.ui.service.targetPort }}
@@ -82,6 +88,10 @@ spec:
     {{- with .Values.ui.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 | trim }}
+    {{- end }}
+    {{- if not .Values.ui.runAsRoot }}
+      securityContext:
+        runAsUser: 101
     {{- end }}
     {{- if .Values.ui.additionalSpec }}
       {{ tpl .Values.ui.additionalSpec . | nindent 6 | trim }}

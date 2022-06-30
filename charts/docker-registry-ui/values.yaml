@@ -39,6 +39,8 @@ ui:
   # Example:
   # nginxProxyPassHeaders: [ my-first-header, my-second-header ]
   nginxProxyPassHeaders: []
+  # Use root or nginx user inside the container, when this is false the target port must be greater or equal to 1024.
+  runAsRoot: true
   # The name and tag of the docker image of the interface
   image: joxit/docker-registry-ui:2.2.1
   # Override default image pull secrets 
