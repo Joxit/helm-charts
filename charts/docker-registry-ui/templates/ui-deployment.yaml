@@ -5,7 +5,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "docker-registry-ui.fullname" . }}-user-iterface
+  name: {{ include "docker-registry-ui.fullname" . }}-user-interface
   labels:
     app.kubernetes.io/component	: user-interface
     {{- include "docker-registry-ui.labels" . | nindent 4 }}
