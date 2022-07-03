@@ -1,0 +1,64 @@
+{{- if .Values.registry.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "docker-registry-ui.fullname" . }}-registry-server
+  labels:
+    app.kubernetes.io/component	: registry-server
+    {{- include "docker-registry-ui.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.registry.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/component	: registry-server
+      {{- include "docker-registry-ui.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/component	: registry-server
+        {{- include "docker-registry-ui.labels" . | nindent 8 }}
+      {{- if .Values.registry.annotations }}
+      annotations:
+        {{- toYaml .Values.registry.annotations | nindent 8 | trim }}
+      {{- end }}
+    spec:
+    {{- if ne (.Values.registry.imagePullSecrets | toString) "-" }}
+      imagePullSecrets:
+        {{- toYaml .Values.registry.imagePullSecrets | nindent 8 }}
+    {{- else }}
+      imagePullSecrets:
+        {{- toYaml .Values.global.imagePullSecrets | nindent 8 }}
+    {{- end}}
+      containers:
+        - name: "registry-server"
+          image: {{ .Values.registry.image | quote }}
+          imagePullPolicy: {{ if ne (.Values.registry.imagePullPolicy | toString) "-" }}{{ .Values.registry.imagePullPolicy }}{{ else }}{{ .Values.global.imagePullPolicy }}{{ end }}
+          env:
+            - name: REGISTRY_HTTP_ADDR
+              value: {{ printf "%s:%d" "0.0.0.0" (.Values.registry.service.targetPort | int) }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.registry.service.targetPort }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.registry.resources | nindent 12 }}
+      {{- with .Values.registry.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 | trim }}
+      {{- end }}
+    {{- with .Values.registry.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 | trim }}
+    {{- end }}
+    {{- with .Values.registry.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 | trim }}
+    {{- end }}
+    {{- if not .Values.registry.runAsRoot }}
+      securityContext:
+        runAsUser: 101
+    {{- end }}
+    {{- if .Values.registry.additionalSpec }}
+      {{ tpl .Values.registry.additionalSpec . | nindent 6 | trim }}
+    {{- end }}
+{{- end }}
