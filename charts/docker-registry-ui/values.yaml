@@ -43,7 +43,7 @@ ui:
   runAsRoot: true
   # The name and tag of the docker image of the interface
   image: joxit/docker-registry-ui:2.2.1
-  # Override default image pull secrets 
+  # Override default image pull secrets
   imagePullSecrets: "-"
   # Override default pull policy
   imagePullPolicy: "-"
@@ -54,7 +54,7 @@ ui:
   # Optional YAML string to specify tolerations.
   tolerations: []
   # This value defines the affinity (https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
-  # for server pods. 
+  # for server pods.
   affinity: {}
   # Annotations to apply to the user interface deployment.
   annotations: null
@@ -80,7 +80,7 @@ registry:
   enabled: false
   # The name and tag of the docker registry server image
   image: registry:2.8.1
-  # Override default image pull secrets 
+  # Override default image pull secrets
   imagePullSecrets: "-"
   # Override default pull policy
   imagePullPolicy: "-"
@@ -91,7 +91,7 @@ registry:
   # Optional YAML string to specify tolerations.
   tolerations: []
   # This value defines the affinity (https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity)
-  # for server pods. 
+  # for server pods.
   affinity: {}
   # Annotations to apply to the registry server deployment.
   annotations: null
@@ -103,7 +103,7 @@ registry:
     # type, you must set the desired `nodePorts` setting below.
     type: ClusterIP
     # Ports that will be exposed on the service
-    port: 80
+    port: 5000
     # The port to listhen on the container. If under 1024, the user must be root
     targetPort: 5000
     # If using a NodePort service type, you must specify the desired nodePort for each exposed port.

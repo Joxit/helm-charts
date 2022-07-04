@@ -1,0 +1,25 @@
+{{- if .Values.registry.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "docker-registry-ui.fullname" . }}-registry-server
+  labels:
+    app.kubernetes.io/component	: registry-server
+    {{- include "docker-registry-ui.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.registry.service.type }}
+  ports:
+    - port: {{ .Values.registry.service.port }}
+      targetPort: {{ .Values.registry.service.targetPort }}
+      protocol: TCP
+      name: http
+      {{- if (and (eq .Values.registry.service.type "NodePort") .Values.registry.service.nodePort) }}
+      nodePort: {{ .Values.registry.service.nodePort }}
+      {{- end }}
+  selector:
+    app.kubernetes.io/component	: registry-server
+    {{- include "docker-registry-ui.labels" . | nindent 4 }}
+  {{- if .Values.registry.service.additionalSpec }}
+    {{ tpl .Values.registry.service.additionalSpec . | nindent 2 | trim }}
+  {{- end }}
+{{- end }}
