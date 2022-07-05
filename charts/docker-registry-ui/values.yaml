@@ -84,6 +84,9 @@ registry:
   imagePullSecrets: "-"
   # Override default pull policy
   imagePullPolicy: "-"
+  # Configuration for the data directory
+  dataVolume:
+    emptyDir: {}
   # The resource settings for registry server pod.
   resources: {}
   # Optional YAML string to specify a nodeSelector config.
