@@ -77,6 +77,7 @@ ui:
     additionalSpec: null
 
 registry:
+  # Enable the registry server.
   enabled: false
   # The name and tag of the docker registry server image
   image: registry:2.8.1
@@ -107,7 +108,7 @@ registry:
     type: ClusterIP
     # Ports that will be exposed on the service
     port: 5000
-    # The port to listhen on the container. If under 1024, the user must be root
+    # The port to listhen on the container.
     targetPort: 5000
     # If using a `NodePort` service type, you must specify the desired `nodePort` for each exposed port.
     nodePort: null

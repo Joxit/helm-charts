@@ -1,4 +1,4 @@
-# Docker Registry Chart
+# Docker Registry UI Chart
 
 ## Prerequisites
   * **Helm 3.2+** (Helm 2 is not supported)
@@ -57,3 +57,25 @@ helm upgrade --install docker-registry-ui .
 | `ui.service.nodePort` | `null` | If using a `NodePort` service type, you must specify the desired `nodePort` for each exposed port. |
 | `ui.service.annotations` | `null` | Annotations to apply to the user interface service. |
 | `ui.service.additionalSpec` | `null` | Optional YAML string that will be appended to the Service spec. |
+
+### Registry Server
+
+| Value | Default | Description |
+| --- | --- | --- |
+| `registry.enabled` | `false` | Enable the registry server. |
+| `registry.image` | `registry:2.8.1` | The name and tag of the docker registry server image |
+| `registry.imagePullSecrets` | `-` | Override default image pull secrets |
+| `registry.imagePullPolicy` | `-` | Override default pull policy |
+| `dataVolume.emptyDir` | `{}` | Configuration for the data directory |
+| `registry.resources` | `{}` | The resource settings for registry server pod. |
+| `registry.nodeSelector` | `{}` | Optional YAML string to specify a nodeSelector config. |
+| `registry.tolerations` | `[]` | Optional YAML string to specify tolerations. |
+| `registry.affinity` | `{}` | This value defines the [affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) for server pods. |
+| `registry.annotations` | `null` | Annotations to apply to the registry server deployment. |
+| `registry.additionalSpec` | `null` | Optional YAML string that will be appended to the deployment spec. |
+| `registry.service.type` | `ClusterIP` | Type of service: `LoadBalancer`, `ClusterIP` or `NodePort`. If using `NodePort` service type, you must set the desired `nodePorts` setting below. |
+| `registry.service.port` | `5000` | Ports that will be exposed on the service |
+| `registry.service.targetPort` | `5000` | The port to listhen on the container. |
+| `registry.service.nodePort` | `null` | If using a `NodePort` service type, you must specify the desired `nodePort` for each exposed port. |
+| `registry.service.annotations` | `null` | Annotations to apply to the user interface service. |
+| `registry.service.additionalSpec` | `null` | Optional YAML string that will be appended to the Service spec. |
