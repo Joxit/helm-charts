@@ -1,0 +1,30 @@
+name: Update Github Pages
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Configure Git
+      run: |
+        git config user.name "$GITHUB_ACTOR"
+        git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+    - name: Store all Markdowns
+      run: find -name '*.md' > /tmp/markdowns
+
+    - name: Retrieve documentation
+      run: |
+        git checkout gh-pages
+        git checkout main -- $(cat /tmp/markdowns)
+        git add $(cat /tmp/markdowns)
+        git commit -m 'Update documentation'
+        git push origin gh-pages
