@@ -1,0 +1,12 @@
+title: Joxit's Helm Chart Repository
+description: Official Helm Chart Repository for Joxit Applications
+url: https://helm.joxit.dev/
+google_analytics: G-T158HYBVZ2
+remote_theme: joxit/joxit.github.io
+author: Jones Magloire
+twitter:
+  username: Joxit
+instagram:
+  username: jox.it
+plugins:
+  - jekyll-seo-tag
