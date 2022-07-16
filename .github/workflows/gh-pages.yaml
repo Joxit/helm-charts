@@ -26,5 +26,7 @@ jobs:
         git checkout gh-pages
         git checkout main -- $(cat /tmp/markdowns)
         git add $(cat /tmp/markdowns)
-        git commit -m 'docs: auto update documentation'
-        git push origin gh-pages
+        if [ -z "$(git diff --name-only --cached)" ]; then
+          git commit -m 'docs: auto update documentation'
+          git push origin gh-pages
+        fi
