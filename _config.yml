@@ -10,3 +10,7 @@ instagram:
   username: jox.it
 plugins:
   - jekyll-seo-tag
+navbar-items:
+  - href: https://joxit.dev
+    name: My Website
+    target: _blank
