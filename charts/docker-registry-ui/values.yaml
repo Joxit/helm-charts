@@ -77,13 +77,13 @@ ui:
     additionalSpec: null
 
   ingress:
-    # Enable the ingress
+    # Enable the ingress for the user interface.
     enabled: false
     # Fully qualified domain name of a network host.
     host: null
-    # Path is matched against the path of an incoming request
+    # Path is matched against the path of an incoming request.
     path: /
-    # Determines the interpretation of the Path matching, must be Prefix to serve assets
+    # Determines the interpretation of the Path matching, must be Prefix to serve assets.
     pathType: Prefix
     # The name of an IngressClass cluster resource.
     ingressClassName: nginx
@@ -91,7 +91,7 @@ ui:
     tls: null
     # Annotations to apply to the user interface ingress.
     annotations: null
-    # If you want a custom path, you can try this example
+    # If you want a custom path, you can try this example:
     # path: /ui(/|$)(.*)
     # annotations:
     #  nginx.ingress.kubernetes.io/rewrite-target: /$2

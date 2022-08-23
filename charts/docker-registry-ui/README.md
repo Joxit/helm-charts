@@ -64,6 +64,13 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `ui.service.nodePort` | `null` | If using a `NodePort` service type, you must specify the desired `nodePort` for each exposed port. |
 | `ui.service.annotations` | `null` | Annotations to apply to the user interface service. |
 | `ui.service.additionalSpec` | `null` | Optional YAML string that will be appended to the Service spec. |
+| `ui.ingress.enable` | `false` | Enable the ingress for the user interface. |
+| `ui.ingress.host` | `null` | Fully qualified domain name of a network host. |
+| `ui.ingress.path` | `/` | Path is matched against the path of an incoming request. |
+| `ui.ingress.pathType` | `Prefix` | Determines the interpretation of the Path matching, must be Prefix to serve assets. |
+| `ui.ingress.ingressClassName` | `nginx` | The name of an IngressClass cluster resource. |
+| `ui.ingress.tls` | `null` | Optional YAML tls configuration. |
+| `ui.ingress.annotations` | `null` | Annotations to apply to the user interface ingress. |
 
 ### Registry Server
 
