@@ -1,0 +1,38 @@
+{{- if .Values.registry.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "docker-registry-ui.fullname" . }}-registry-server
+  labels:
+    app.kubernetes.io/component	: registry-server
+    {{- include "docker-registry-ui.labels" . | nindent 4 }}
+  {{- with .Values.registry.ingress.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.registry.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.registry.ingress.ingressClassName }}
+  {{- end -}}
+{{- if .Values.registry.ingress.tls }}
+  tls:
+{{ tpl (toYaml .Values.registry.ingress.tls) $ | indent 4 }}
+{{- end }}
+  rules:
+    - http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "docker-registry-ui.fullname" . }}-registry-server
+                port:
+                  number: {{ .Values.registry.service.port }}
+            {{- if .Values.registry.ingress.path }}
+            path: {{ .Values.registry.ingress.path }}
+            {{- end }}
+            {{- if .Values.registry.ingress.pathType }}
+            pathType: {{ .Values.registry.ingress.pathType }}
+            {{- end }}
+      {{- if .Values.registry.ingress.host }}
+      host: {{ .Values.registry.ingress.host | quote }}
+      {{- end -}}
+{{- end }}

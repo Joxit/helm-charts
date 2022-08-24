@@ -135,3 +135,23 @@ registry:
     annotations: null
     # Optional YAML string that will be appended to the Service spec.
     additionalSpec: null
+
+  ingress:
+    # Enable the ingress for the registry server.
+    enabled: false
+    # Fully qualified domain name of a network host.
+    host: null
+    # Path is matched against the path of an incoming request.
+    path: /v2/
+    # Determines the interpretation of the Path matching, must be Prefix to serve assets.
+    pathType: Prefix
+    # The name of an IngressClass cluster resource.
+    ingressClassName: nginx
+    # TLS configuration
+    tls: null
+    # Annotations to apply to the registry server ingress.
+    annotations: null
+    # If you want a custom path, you can try this example:
+    # path: /api(/|$)(.*)
+    # annotations:
+    #  nginx.ingress.kubernetes.io/rewrite-target: /$2
