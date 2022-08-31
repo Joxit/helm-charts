@@ -73,7 +73,7 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `registry.image` | `registry:2.8.1` | The name and tag of the docker registry server image |
 | `registry.imagePullSecrets` | `-` | Override default image pull secrets |
 | `registry.imagePullPolicy` | `-` | Override default pull policy |
-| `dataVolume.emptyDir` | `{}` | Configuration for the data directory |
+| `registry.dataVolume` | `null` | Configuration for the data directory. When null it will create an emptyDir. |
 | `registry.resources` | `{}` | The resource settings for registry server pod. |
 | `registry.nodeSelector` | `{}` | Optional YAML string to specify a nodeSelector config. |
 | `registry.tolerations` | `[]` | Optional YAML string to specify tolerations. |

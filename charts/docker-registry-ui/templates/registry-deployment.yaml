@@ -47,7 +47,11 @@ spec:
             {{- toYaml .Values.registry.resources | nindent 12 }}
       volumes:
         - name: data
-          {{- toYaml .Values.registry.dataVolume | nindent 10 }}
+          {{- if .Values.registry.dataVolume }}
+            {{- toYaml .Values.registry.dataVolume | nindent 10 }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
       {{- with .Values.registry.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 | trim }}
