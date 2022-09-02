@@ -57,9 +57,9 @@ ui:
   # for server pods.
   affinity: {}
   # Annotations to apply to the user interface deployment.
-  annotations: null
+  annotations: {}
   # Optional YAML string that will be appended to the deployment spec.
-  additionalSpec: null
+  additionalSpec: {}
 
   service:
     # Type of service: `LoadBalancer`, `ClusterIP` or `NodePort`. If using `NodePort` service
@@ -72,9 +72,9 @@ ui:
     # If using a `NodePort` service type, you must specify the desired `nodePort` for each exposed port.
     nodePort: null
     # Annotations to apply to the user interface service.
-    annotations: null
+    annotations: {}
     # Optional YAML string that will be appended to the Service spec.
-    additionalSpec: null
+    additionalSpec: {}
 
   ingress:
     # Enable the ingress for the user interface.
@@ -88,9 +88,9 @@ ui:
     # The name of an IngressClass cluster resource.
     ingressClassName: nginx
     # TLS configuration
-    tls: null
+    tls: []
     # Annotations to apply to the user interface ingress.
-    annotations: null
+    annotations: {}
     # If you want a custom path, you can try this example:
     # path: /ui(/|$)(.*)
     # annotations:
@@ -117,9 +117,9 @@ registry:
   # for server pods.
   affinity: {}
   # Annotations to apply to the registry server deployment.
-  annotations: null
+  annotations: {}
   # Optional YAML string that will be appended to the deployment spec.
-  additionalSpec: null
+  additionalSpec: {}
 
   service:
     # Type of service: `LoadBalancer`, `ClusterIP` or `NodePort`. If using `NodePort` service
@@ -132,9 +132,9 @@ registry:
     # If using a `NodePort` service type, you must specify the desired `nodePort` for each exposed port.
     nodePort: null
     # Annotations to apply to the registry server service.
-    annotations: null
+    annotations: {}
     # Optional YAML string that will be appended to the Service spec.
-    additionalSpec: null
+    additionalSpec: {}
 
   ingress:
     # Enable the ingress for the registry server.
@@ -148,9 +148,9 @@ registry:
     # The name of an IngressClass cluster resource.
     ingressClassName: nginx
     # TLS configuration
-    tls: null
+    tls: []
     # Annotations to apply to the registry server ingress.
-    annotations: null
+    annotations: {}
     # If you want a custom path, you can try this example:
     # path: /api(/|$)(.*)
     # annotations:
