@@ -56,14 +56,21 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `ui.nodeSelector` | `{}` | Optional YAML string to specify a nodeSelector config. |
 | `ui.tolerations` | `[]` | Optional YAML string to specify tolerations. |
 | `ui.affinity` | `{}` | This value defines the [affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) for server pods. |
-| `ui.annotations` | `null` | Annotations to apply to the user interface deployment. |
-| `ui.additionalSpec` | `null` | Optional YAML string that will be appended to the deployment spec. |
+| `ui.annotations` | `{}` | Annotations to apply to the user interface deployment. |
+| `ui.additionalSpec` | `{}` | Optional YAML string that will be appended to the deployment spec. |
 | `ui.service.type` | `ClusterIP` | Type of service: `LoadBalancer`, `ClusterIP` or `NodePort`. If using `NodePort` service type, you must set the desired `nodePorts` setting below. |
 | `ui.service.port` | `80` | Ports that will be exposed on the service |
 | `ui.service.targetPort` | `80` | The port to listhen on the container. If under 1024, the user must be root |
 | `ui.service.nodePort` | `null` | If using a `NodePort` service type, you must specify the desired `nodePort` for each exposed port. |
-| `ui.service.annotations` | `null` | Annotations to apply to the user interface service. |
-| `ui.service.additionalSpec` | `null` | Optional YAML string that will be appended to the Service spec. |
+| `ui.service.annotations` | `{}` | Annotations to apply to the user interface service. |
+| `ui.service.additionalSpec` | `{}` | Optional YAML string that will be appended to the Service spec. |
+| `ui.ingress.enable` | `false` | Enable the ingress for the user interface. |
+| `ui.ingress.host` | `null` | Fully qualified domain name of a network host. |
+| `ui.ingress.path` | `/` | Path is matched against the path of an incoming request. |
+| `ui.ingress.pathType` | `Prefix` | Determines the interpretation of the Path matching, must be Prefix to serve assets. |
+| `ui.ingress.ingressClassName` | `nginx` | The name of an IngressClass cluster resource. |
+| `ui.ingress.tls` | `[]` | Optional YAML tls configuration. |
+| `ui.ingress.annotations` | `{}` | Annotations to apply to the user interface ingress. |
 
 ### Registry Server
 
@@ -78,11 +85,18 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `registry.nodeSelector` | `{}` | Optional YAML string to specify a nodeSelector config. |
 | `registry.tolerations` | `[]` | Optional YAML string to specify tolerations. |
 | `registry.affinity` | `{}` | This value defines the [affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) for server pods. |
-| `registry.annotations` | `null` | Annotations to apply to the registry server deployment. |
-| `registry.additionalSpec` | `null` | Optional YAML string that will be appended to the deployment spec. |
+| `registry.annotations` | `{}` | Annotations to apply to the registry server deployment. |
+| `registry.additionalSpec` | `{}` | Optional YAML string that will be appended to the deployment spec. |
 | `registry.service.type` | `ClusterIP` | Type of service: `LoadBalancer`, `ClusterIP` or `NodePort`. If using `NodePort` service type, you must set the desired `nodePorts` setting below. |
 | `registry.service.port` | `5000` | Ports that will be exposed on the service |
 | `registry.service.targetPort` | `5000` | The port to listhen on the container. |
 | `registry.service.nodePort` | `null` | If using a `NodePort` service type, you must specify the desired `nodePort` for each exposed port. |
-| `registry.service.annotations` | `null` | Annotations to apply to the user interface service. |
-| `registry.service.additionalSpec` | `null` | Optional YAML string that will be appended to the Service spec. |
+| `registry.service.annotations` | `{}` | Annotations to apply to the user interface service. |
+| `registry.service.additionalSpec` | `{}` | Optional YAML string that will be appended to the Service spec. |
+| `registry.ingress.enable` | `false` | Enable the ingress for the registry server. |
+| `registry.ingress.host` | `null` | Fully qualified domain name of a network host. |
+| `registry.ingress.path` | `/v2/` | Path is matched against the path of an incoming request. |
+| `registry.ingress.pathType` | `Prefix` | Determines the interpretation of the Path matching, must be Prefix to serve assets. |
+| `registry.ingress.ingressClassName` | `nginx` | The name of an IngressClass cluster resource. |
+| `registry.ingress.tls` | `[]` | Optional YAML tls configuration. |
+| `registry.ingress.annotations` | `{}` | Annotations to apply to the registry server ingress. |
