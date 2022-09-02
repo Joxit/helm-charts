@@ -30,3 +30,18 @@ jobs:
       env:
         CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         CR_SKIP_EXISTING: true
+
+    - name: Store all Markdowns
+      run: |
+        git checkout main
+        find -name '*.md' > /tmp/markdowns
+
+    - name: Commit documentation
+      run: |
+        git checkout gh-pages
+        git checkout main -- $(cat /tmp/markdowns)
+        git add $(cat /tmp/markdowns)
+        if [ -n "$(git diff --name-only --cached)" ]; then
+          git commit -m 'docs: auto update documentation'
+          git push origin gh-pages
+        fi
