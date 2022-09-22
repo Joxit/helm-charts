@@ -39,10 +39,13 @@ ui:
   # Example:
   # nginxProxyPassHeaders: [ my-first-header, my-second-header ]
   nginxProxyPassHeaders: []
+  # Add header Control-Cache: no-store, no-cache on requests to registry server.
+  # This needs to update your registry configuration with : `Access-Control-Allow-Headers: ['Authorization', 'Accept', 'Cache-Control']`
+  useControlCacheHeader: false
   # Use root or nginx user inside the container, when this is false the target port must be greater or equal to 1024.
   runAsRoot: true
   # The name and tag of the docker image of the interface
-  image: joxit/docker-registry-ui:2.2.1
+  image: joxit/docker-registry-ui:2.3.0
   # Override default image pull secrets
   imagePullSecrets: "-"
   # Override default pull policy

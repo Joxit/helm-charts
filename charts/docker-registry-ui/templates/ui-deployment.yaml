@@ -76,6 +76,8 @@ spec:
               value: {{ .Values.ui.historyCustomLabels | join "," }}
             - name: NGINX_LISTEN_PORT
               value: {{ .Values.ui.service.targetPort | quote }}
+            - name: USE_CONTROL_CACHE_HEADER
+              value: {{ .Values.ui.useControlCacheHeader | quote }}
           ports:
             - name: http
               containerPort: {{ .Values.ui.service.targetPort }}
