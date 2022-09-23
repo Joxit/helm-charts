@@ -48,8 +48,9 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `ui.historyCustomLabels` | `[]` | Expose custom labels in history page, custom labels will be processed like maintainer label. |
 | `ui.nginxProxyHeaders` | `[]` | Update the default Nginx configuration and **set custom headers** for your backend docker registry. Only when `ui.proxy` is used. |
 | `ui.nginxProxyPassHeaders` | `[]` | Update the default Nginx configuration and **forward custom headers** to your backend docker registry. Only when `ui.proxy` is used. |
+| `ui.useControlCacheHeader` | `false` | Add header `Control-Cache: no-store, no-cache` on requests to registry server. |
 | `ui.runAsRoot` | `true` | Use root or nginx user inside the container, when this is false the target port must be greater or equal to 1024. |
-| `ui.image` | `joxit/docker-registry-ui:2.2.1` | The name and tag of the docker image of the interface |
+| `ui.image` | `joxit/docker-registry-ui:2.3.0` | The name and tag of the docker image of the interface |
 | `ui.imagePullSecrets` | `-` | Override default image pull secrets |
 | `ui.imagePullPolicy` | `-` | Override default pull policy |
 | `ui.resources` | `{}` | The resource settings for user interface pod. |
