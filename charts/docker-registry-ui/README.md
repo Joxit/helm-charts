@@ -85,6 +85,7 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `registry.resources` | `{}` | The resource settings for registry server pod. |
 | `registry.nodeSelector` | `{}` | Optional YAML string to specify a nodeSelector config. |
 | `registry.tolerations` | `[]` | Optional YAML string to specify tolerations. |
+| `registry.extraEnv` | `[]` | Extra Environmental Variables for Registry. |
 | `registry.affinity` | `{}` | This value defines the [affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) for server pods. |
 | `registry.annotations` | `{}` | Annotations to apply to the registry server deployment. |
 | `registry.additionalSpec` | `{}` | Optional YAML string that will be appended to the deployment spec. |

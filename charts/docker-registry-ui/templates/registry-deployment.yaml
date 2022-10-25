@@ -36,6 +36,10 @@ spec:
           env:
             - name: REGISTRY_HTTP_ADDR
               value: {{ printf "%s:%d" "0.0.0.0" (.Values.registry.service.targetPort | int) }}
+            {{- range .Values.registry.extraEnv }}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.registry.service.targetPort }}
