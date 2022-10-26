@@ -38,7 +38,8 @@ jobs:
 
     - name: Commit documentation
       run: |
-        git checkout gh-pages
+        git fetch origin gh-pages
+        git checkout -B gh-pages origin/gh-pages
         git checkout main -- $(cat /tmp/markdowns)
         git add $(cat /tmp/markdowns)
         if [ -n "$(git diff --name-only --cached)" ]; then
