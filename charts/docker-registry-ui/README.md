@@ -62,7 +62,10 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `ui.service.type` | `ClusterIP` | Type of service: `LoadBalancer`, `ClusterIP` or `NodePort`. If using `NodePort` service type, you must set the desired `nodePorts` setting below. |
 | `ui.service.port` | `80` | Ports that will be exposed on the service |
 | `ui.service.targetPort` | `80` | The port to listhen on the container. If under 1024, the user must be root |
+| `ui.service.clusterIP`         | if `ui.service.type` is `ClusterIP` and this is non-empty, sets the cluster IP of the service | `nil`           |
 | `ui.service.nodePort` | `null` | If using a `NodePort` service type, you must specify the desired `nodePort` for each exposed port. |
+| `ui.service.loadBalancerIP`     | if `ui.service.type` is `LoadBalancer` and this is non-empty, sets the loadBalancerIP of the service | `nil`          |
+| `ui.service.loadBalancerSourceRanges`| if `ui.service.type` is `LoadBalancer` and this is non-empty, sets the loadBalancerSourceRanges of the service | `nil`           |
 | `ui.service.annotations` | `{}` | Annotations to apply to the user interface service. |
 | `ui.service.additionalSpec` | `{}` | Optional YAML string that will be appended to the Service spec. |
 | `ui.ingress.enable` | `false` | Enable the ingress for the user interface. |

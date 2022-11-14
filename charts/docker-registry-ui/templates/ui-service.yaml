@@ -7,6 +7,15 @@ metadata:
     {{- include "docker-registry-ui.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.ui.service.type }}
+{{- if (and (eq .Values.ui.service.type "ClusterIP") (not (empty .Values.ui.service.clusterIP))) }}
+  clusterIP: {{ .Values.ui.service.clusterIP }}
+{{- end }}
+{{- if (and (eq .Values.ui.service.type "LoadBalancer") (not (empty .Values.ui.service.loadBalancerIP))) }}
+  loadBalancerIP: {{ .Values.ui.service.loadBalancerIP }}
+{{- end }}
+{{- if (and (eq .Values.ui.service.type "LoadBalancer") (not (empty .Values.ui.service.loadBalancerSourceRanges))) }}
+  loadBalancerSourceRanges: {{ .Values.ui.service.loadBalancerSourceRanges }}
+{{- end }}
   ports:
     - port: {{ .Values.ui.service.port }}
       targetPort: {{ .Values.ui.service.targetPort }}
