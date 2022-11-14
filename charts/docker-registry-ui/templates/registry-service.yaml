@@ -7,6 +7,9 @@ metadata:
     app.kubernetes.io/component	: registry-server
     {{- include "docker-registry-ui.labels" . | nindent 4 }}
 spec:
+  selector:
+    app.kubernetes.io/component	: registry-server
+    {{- include "docker-registry-ui.labels" . | nindent 4 }}
   type: {{ .Values.registry.service.type }}
   ports:
     - port: {{ .Values.registry.service.port }}
@@ -16,10 +19,7 @@ spec:
       {{- if (and (eq .Values.registry.service.type "NodePort") .Values.registry.service.nodePort) }}
       nodePort: {{ .Values.registry.service.nodePort }}
       {{- end }}
-  selector:
-    app.kubernetes.io/component	: registry-server
-    {{- include "docker-registry-ui.labels" . | nindent 4 }}
   {{- if .Values.registry.service.additionalSpec }}
-    {{ tpl .Values.registry.service.additionalSpec . | nindent 2 | trim }}
+  {{ tpl .Values.registry.service.additionalSpec . | nindent 2 | trim }}
   {{- end }}
 {{- end }}
