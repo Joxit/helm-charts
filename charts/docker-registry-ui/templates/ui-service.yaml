@@ -5,6 +5,10 @@ metadata:
   labels:
     app.kubernetes.io/component	: user-interface
     {{- include "docker-registry-ui.labels" . | nindent 4 }}
+  {{- with .Values.ui.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   selector:
     app.kubernetes.io/component	: user-interface
