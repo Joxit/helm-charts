@@ -6,6 +6,10 @@ metadata:
   labels:
     app.kubernetes.io/component	: registry-server
     {{- include "docker-registry-ui.labels" . | nindent 4 }}
+  {{- with .Values.registry.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   selector:
     app.kubernetes.io/component	: registry-server
