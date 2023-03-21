@@ -78,6 +78,28 @@ spec:
               value: {{ .Values.ui.service.targetPort | quote }}
             - name: USE_CONTROL_CACHE_HEADER
               value: {{ .Values.ui.useControlCacheHeader | quote }}
+            - name: THEME
+              value: {{ .Values.ui.defaultTheme | quote }}
+            - name: THEME_PRIMARY_TEXT
+              value: {{ .Values.ui.theme.primaryText | quote }}
+            - name: THEME_NEUTRAL_TEXT
+              value: {{ .Values.ui.theme.neutralText | quote }}
+            - name: THEME_BACKGROUND
+              value: {{ .Values.ui.theme.background | quote }}
+            - name: THEME_HOVER_BACKGROUND
+              value: {{ .Values.ui.theme.hoverBackground | quote }}
+            - name: THEME_ACCENT_TEXT
+              value: {{ .Values.ui.theme.accentText | quote }}
+            - name: THEME_HEADER_TEXT
+              value: {{ .Values.ui.theme.headerText | quote }}
+            - name: THEME_HEADER_BACKGROUND
+              value: {{ .Values.ui.theme.headerBackground | quote }}
+            - name: THEME_FOOTER_TEXT
+              value: {{ .Values.ui.theme.footerText | quote }}
+            - name: THEME_FOOTER_NEUTRAL_TEXT
+              value: {{ .Values.ui.theme.footerNeutralText | quote }}
+            - name: THEME_FOOTER_BACKGROUND
+              value: {{ .Values.ui.theme.footerBackground | quote }}
           ports:
             - name: http
               containerPort: {{ .Values.ui.service.targetPort }}

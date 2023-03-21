@@ -1,3 +1,4 @@
+## Global
 global:
   # Set the prefix used for all resources in the Helm chart. If not set,
   # the prefix will be `<helm release name>`.
@@ -7,6 +8,7 @@ global:
   # The default image policy for images: `IfNotPresent`, `Always`, `Never`
   imagePullPolicy: IfNotPresent
 
+## User Interface
 ui:
   # Number of replicas for the Deployment.
   replicas: 1
@@ -33,7 +35,7 @@ ui:
   # Update the default Nginx configuration and **set custom headers** for your backend docker registry. Only when `ui.proxy` is used.
   # Example:
   # nginxProxyHeaders:
-  #  - my-heeader-name: my-header-value
+  #  [ { my-heeader-name: my-header-value } ]
   nginxProxyHeaders: []
   # Update the default Nginx configuration and **forward custom headers** to your backend docker registry. Only when `ui.proxy` is used.
   # Example:
@@ -44,8 +46,34 @@ ui:
   useControlCacheHeader: false
   # Use root or nginx user inside the container, when this is false the target port must be greater or equal to 1024.
   runAsRoot: true
+
+  # Select the default theme to apply, values can be `auto`, `dark` and `light`
+  defaultTheme: "auto"
+  
+  theme:
+    # Custom background color for the UI
+    background: ""
+    # Custom primary text color for the UI
+    primaryText: ""
+    # Custom netral color for the UI (icons)
+    neutralText: ""
+    # Custom accent color for the UI (buttons)
+    accentText: ""
+    # Custom hover background color for the UI
+    hoverBackground: ""
+    # Custom header background color for the UI
+    headerBackground: ""
+    # Custom header text color for the UI
+    headerText: ""
+    # Custom footer background color for the UI
+    footerBackground: ""
+    # Custom footer text color for the UI
+    footerText: ""
+    # Custom footer neutral color for the UI (links)
+    footerNeutralText: ""
+
   # The name and tag of the docker image of the interface
-  image: joxit/docker-registry-ui:2.3.0
+  image: joxit/docker-registry-ui:2.4.1
   # Override default image pull secrets
   imagePullSecrets: "-"
   # Override default pull policy
@@ -97,8 +125,9 @@ ui:
     # If you want a custom path, you can try this example:
     # path: /ui(/|$)(.*)
     # annotations:
-    #  nginx.ingress.kubernetes.io/rewrite-target: /$2
+    #  { nginx.ingress.kubernetes.io/rewrite-target: /$2 }
 
+## Registry Server
 registry:
   # Enable the registry server.
   enabled: false
@@ -159,4 +188,4 @@ registry:
     # If you want a custom path, you can try this example:
     # path: /api(/|$)(.*)
     # annotations:
-    #  nginx.ingress.kubernetes.io/rewrite-target: /$2
+    #  { nginx.ingress.kubernetes.io/rewrite-target: /$2 }
