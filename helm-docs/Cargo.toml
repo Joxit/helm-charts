@@ -7,6 +7,7 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+convert_case = "^0.6"
 structopt = "^0.3"
 yaml-rust = "^0.4"
 regex = "^1.3"

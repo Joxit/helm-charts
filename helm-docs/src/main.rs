@@ -1,10 +1,9 @@
-use std::fs;
-use std::path::PathBuf;
+use crate::commands::Command;
 use structopt::StructOpt;
+
 mod commands;
 mod table;
-use crate::commands::Command;
-use crate::table::generate_table;
+mod usage;
 
 #[derive(Debug, StructOpt)]
 #[structopt(name = "helm-docs", author, about)]
