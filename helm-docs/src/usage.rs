@@ -1,8 +1,4 @@
-use convert_case::{Case, Casing};
-use regex::Regex;
-use std::fs;
-use std::path::PathBuf;
-use yaml_rust::{YamlEmitter, YamlLoader};
+use crate::chart::Chart;
 
 const USAGE: &str = r#"
 1. Add my Helm repository (named `joxit`)
@@ -19,21 +15,11 @@ helm upgrade --install {chart-name} joxit/{chart-name}
 ```
 "#;
 
-fn pretty_name(name: &str) -> String {
-  name.to_case(Case::Title).replace("Ui", "UI")
-}
-
-pub fn generate_usage(path: PathBuf) {
-  let s = fs::read_to_string(path).unwrap();
-  let docs = YamlLoader::load_from_str(&s).unwrap();
-  let doc = &docs[0];
-
-  let name = doc["name"].as_str().unwrap();
-
+pub fn generate_usage(chart: Chart) {
   println!(
     "{}",
     USAGE
-      .replace("{chart-name}", name)
-      .replace("{chart-pretty-name}", pretty_name(name).as_str())
+      .replace("{chart-name}", &chart.name)
+      .replace("{chart-pretty-name}", &chart.pretty_name)
   )
 }

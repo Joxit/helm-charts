@@ -1,6 +1,7 @@
 use crate::commands::Command;
 use structopt::StructOpt;
 
+mod chart;
 mod commands;
 mod table;
 mod usage;
