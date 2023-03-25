@@ -50,6 +50,17 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `ui.nginxProxyPassHeaders` | `[]` | Update the default Nginx configuration and **forward custom headers** to your backend docker registry. Only when `ui.proxy` is used. |
 | `ui.useControlCacheHeader` | `false` | Add header `Control-Cache: no-store, no-cache` on requests to registry server. |
 | `ui.runAsRoot` | `true` | Use root or nginx user inside the container, when this is false the target port must be greater or equal to 1024. |
+| `ui.defaultTheme` | `"auto"` | Select the default theme to apply, values can be `auto`, `dark` and `light` |
+| `ui.theme.background` | `""` | Custom background color for the UI |
+| `ui.theme.primaryText` | `""` | Custom primary text color for the UI |
+| `ui.theme.neutralText` | `""` | Custom netral color for the UI (icons) |
+| `ui.theme.accentText` | `""` | Custom accent color for the UI (buttons) |
+| `ui.theme.hoverBackground` | `""` | Custom hover background color for the UI |
+| `ui.theme.headerBackground` | `""` | Custom header background color for the UI |
+| `ui.theme.headerText` | `""` | Custom header text color for the UI |
+| `ui.theme.footerBackground` | `""` | Custom footer background color for the UI |
+| `ui.theme.footerText` | `""` | Custom footer text color for the UI |
+| `ui.theme.footerNeutralText` | `""` | Custom footer neutral color for the UI (links) |
 | `ui.image` | `joxit/docker-registry-ui:2.3.0` | The name and tag of the docker image of the interface |
 | `ui.imagePullSecrets` | `-` | Override default image pull secrets |
 | `ui.imagePullPolicy` | `-` | Override default pull policy |
