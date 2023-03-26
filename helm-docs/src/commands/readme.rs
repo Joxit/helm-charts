@@ -1,4 +1,5 @@
 use crate::chart::Chart;
+use crate::prerequisites::generate_prerequisites;
 use crate::table::generate_table;
 use crate::usage::generate_usage;
 use std::path::PathBuf;
@@ -14,6 +15,10 @@ impl Readme {
   pub fn exec(&self) {
     let chart = Chart::from(self.directory.join("Chart.yaml"));
     let values = self.directory.join("values.yaml");
+    println!("# {} Chart", chart.pretty_name);
+    println!("");
+    println!("## Prerequisites");
+    generate_prerequisites();
     println!("## Usage");
     generate_usage(chart);
     println!("## Configuration");

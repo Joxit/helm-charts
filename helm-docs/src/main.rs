@@ -3,6 +3,7 @@ use structopt::StructOpt;
 
 mod chart;
 mod commands;
+mod prerequisites;
 mod table;
 mod usage;
 
