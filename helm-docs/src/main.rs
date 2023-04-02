@@ -17,5 +17,13 @@ pub struct HelmDocs {
 fn main() {
   let opt = HelmDocs::from_args();
 
-  opt.command.exec();
+  if let Err(e) = opt.command.exec() {
+    eprintln!("Error: {}", e);
+    let root_cause = format!("{}", e.root_cause());
+    if !root_cause.is_empty() {
+      eprintln!("");
+      eprintln!("Caused by:");
+      eprintln!("    {}", e.root_cause());
+    }
+  }
 }

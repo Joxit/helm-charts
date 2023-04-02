@@ -1,3 +1,4 @@
+use anyhow::{Context, Result};
 use regex::Regex;
 use std::fs;
 use std::path::PathBuf;
@@ -19,12 +20,15 @@ fn generate_default_value(line: &str) -> String {
   line.split_once(":").unwrap().1.trim().to_string()
 }
 
-pub fn generate_table(path: PathBuf) {
+pub fn generate_table(path: PathBuf) -> Result<()> {
   let mut state = 0;
   let mut comment = String::new();
   let mut key = String::new();
   let key_regex = Regex::new("^\\s*[a-zA-Z0-9]").unwrap();
-  for line in fs::read_to_string(path).unwrap().split("\n") {
+  for line in fs::read_to_string(&path)
+    .with_context(|| format!("Failed to open {:?}", path))?
+    .split("\n")
+  {
     if line.trim().starts_with("## ") {
       println!("");
       println!("#{}", line);
@@ -61,4 +65,5 @@ pub fn generate_table(path: PathBuf) {
       state = 2;
     }
   }
+  Ok(())
 }

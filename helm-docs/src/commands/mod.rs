@@ -1,4 +1,5 @@
 use crate::commands::readme::Readme;
+use anyhow::Result;
 use structopt::StructOpt;
 
 mod readme;
@@ -10,9 +11,10 @@ pub enum Command {
 }
 
 impl Command {
-  pub fn exec(&self) {
+  pub fn exec(&self) -> Result<()> {
     match self {
-      Command::Readme(executable) => executable.exec(),
+      Command::Readme(executable) => executable.exec()?,
     }
+    Ok(())
   }
 }
