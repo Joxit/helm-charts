@@ -1,6 +1,7 @@
 use anyhow::{Context, Result};
 use regex::Regex;
 use std::fs;
+use std::io::Write;
 use std::path::PathBuf;
 
 fn generate_key(key: &String, line: &str) -> String {
@@ -20,7 +21,7 @@ fn generate_default_value(line: &str) -> String {
   line.split_once(":").unwrap().1.trim().to_string()
 }
 
-pub fn generate_table(path: PathBuf) -> Result<()> {
+pub fn generate_table<W: Write>(writer: &mut W, path: PathBuf) -> Result<()> {
   let mut state = 0;
   let mut comment = String::new();
   let mut key = String::new();
@@ -30,11 +31,11 @@ pub fn generate_table(path: PathBuf) -> Result<()> {
     .split("\n")
   {
     if line.trim().starts_with("## ") {
-      println!("");
-      println!("#{}", line);
-      println!("");
-      println!("| Value | Default | Description |");
-      println!("| --- | --- | --- |");
+      writeln!(writer, "")?;
+      writeln!(writer, "#{}", line)?;
+      writeln!(writer, "")?;
+      writeln!(writer, "| Value | Default | Description |")?;
+      writeln!(writer, "| --- | --- | --- |")?;
       comment = String::new();
       state = 0;
     } else if key_regex.is_match(line) {
@@ -48,12 +49,13 @@ pub fn generate_table(path: PathBuf) -> Result<()> {
         )
       }
       if comment.len() > 0 {
-        println!(
+        writeln!(
+          writer,
           "| `{}` | `{}` | {} |",
           key,
           generate_default_value(line),
           comment
-        );
+        )?;
       }
       comment = String::new();
     } else if line.trim().starts_with("# ") {
