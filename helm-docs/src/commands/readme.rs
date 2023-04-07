@@ -20,14 +20,14 @@ impl Readme {
   pub fn exec(&self) -> Result<()> {
     if self.write {
       let mut file = File::create(self.directory.join("README.md"))?;
-      self.generate_all(&mut file)?;
+      self.generate_readme(&mut file)?;
     } else {
-      self.generate_all(&mut std::io::stdout())?;
+      self.generate_readme(&mut std::io::stdout())?;
     }
     Ok(())
   }
 
-  fn generate_all<W: Write>(&self, writer: &mut W) -> Result<()> {
+  fn generate_readme<W: Write>(&self, writer: &mut W) -> Result<()> {
     let chart = Chart::try_from(self.directory.join("Chart.yaml"))?;
     let values = self.directory.join("values.yaml");
 
