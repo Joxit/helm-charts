@@ -12,24 +12,26 @@ use structopt::StructOpt;
 pub struct Readme {
   #[structopt(short = "w", long = "write")]
   write: bool,
-  #[structopt()]
-  directory: PathBuf,
+  #[structopt(required = true)]
+  directories: Vec<PathBuf>,
 }
 
 impl Readme {
   pub fn exec(&self) -> Result<()> {
-    if self.write {
-      let mut file = File::create(self.directory.join("README.md"))?;
-      self.generate_readme(&mut file)?;
-    } else {
-      self.generate_readme(&mut std::io::stdout())?;
+    for directory in &self.directories {
+      if self.write {
+        let mut file = File::create(directory.join("README.md"))?;
+        self.generate_readme(&mut file, &directory)?;
+      } else {
+        self.generate_readme(&mut std::io::stdout(), &directory)?;
+      }  
     }
     Ok(())
   }
 
-  fn generate_readme<W: Write>(&self, writer: &mut W) -> Result<()> {
-    let chart = Chart::try_from(self.directory.join("Chart.yaml"))?;
-    let values = self.directory.join("values.yaml");
+  fn generate_readme<W: Write>(&self, writer: &mut W, directory: &PathBuf) -> Result<()> {
+    let chart = Chart::try_from(directory.join("Chart.yaml"))?;
+    let values = directory.join("values.yaml");
 
     writeln!(writer, "# {} Chart", chart.pretty_name)?;
     writeln!(writer, "")?;
