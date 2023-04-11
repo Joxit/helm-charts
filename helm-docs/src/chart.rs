@@ -2,11 +2,13 @@ use anyhow::{Context, Error, Result};
 use convert_case::{Case, Casing};
 use std::fs;
 use std::path::PathBuf;
-use yaml_rust::YamlLoader;
+use yaml_rust::{Yaml, YamlLoader};
 
 pub struct Chart {
   pub name: String,
   pub pretty_name: String,
+  pub app_version: String,
+  pub yaml: Yaml,
 }
 
 fn pretty_name(name: &str) -> String {
@@ -26,9 +28,15 @@ impl TryFrom<PathBuf> for Chart {
       .as_str()
       .with_context(|| format!("Failed to found Chart name from {:?}", path))?;
 
+    let app_version = doc["appVersion"]
+      .as_str()
+      .with_context(|| format!("Failed to found Chart app version from {:?}", path))?;
+
     Ok(Chart {
       name: name.to_string(),
       pretty_name: pretty_name(name),
+      app_version: app_version.to_string(),
+      yaml: doc.clone(),
     })
   }
 }
