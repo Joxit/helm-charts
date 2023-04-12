@@ -24,7 +24,7 @@ impl Readme {
         self.generate_readme(&mut file, &directory)?;
       } else {
         self.generate_readme(&mut std::io::stdout(), &directory)?;
-      }  
+      }
     }
     Ok(())
   }
