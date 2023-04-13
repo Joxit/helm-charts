@@ -1,9 +1,10 @@
 use crate::chart::Chart;
 use anyhow::{anyhow, Context, Result};
 use regex::Regex;
+use std::fs;
 use std::path::PathBuf;
 use structopt::StructOpt;
-use yaml_rust::YamlLoader;
+use yaml_rust::{Yaml, YamlLoader};
 
 #[derive(Debug, StructOpt)]
 pub struct Check {
@@ -21,9 +22,14 @@ impl Check {
 
   fn check_chart(&self, directory: &PathBuf) -> Result<()> {
     let chart = Chart::try_from(directory.join("Chart.yaml"))?;
-    let values = directory.join("values.yaml");
+    let values = self.get_values_yaml(&directory)?;
 
-    let image = self.check_chart_file_image(&chart, directory)?;
+    if let Some(image_tag) = self.check_chart_file_image(&chart, directory)? {
+      if let Some(image) = image_tag.split(":").next() {
+        self.check_values_file_image(image, &image_tag, &values)?;
+      }
+    }
+
     Ok(())
   }
 
@@ -62,5 +68,35 @@ impl Check {
       }
     }
     Ok(None)
+  }
+
+  fn get_values_yaml(&self, directory: &PathBuf) -> Result<Yaml> {
+    let file = directory.join("values.yaml");
+    let content =
+      fs::read_to_string(&file).with_context(|| format!("Failed to open {:?}", file))?;
+
+    let values = YamlLoader::load_from_str(&content)
+      .with_context(|| format!("Failed to parse YAML file {:?}", file))?;
+    Ok(values[0].clone())
+  }
+
+  fn check_values_file_image(&self, image: &str, image_tag: &str, values: &Yaml) -> Result<()> {
+    if let Some(map) = values.as_hash() {
+      for key in map.keys() {
+        let value = map[key].as_str().unwrap_or("");
+        if key.as_str() == Some("image") && value.starts_with(image) {
+          if value != image_tag {
+            return Err(anyhow!(
+              "Incorrect version in your values.yaml, should be {} and found {}",
+              image_tag,
+              value
+            ));
+          }
+        } else {
+          self.check_values_file_image(image, image_tag, &map[key])?;
+        }
+      }
+    }
+    Ok(())
   }
 }
