@@ -19,6 +19,7 @@ jobs:
         git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
         cargo install --path=helm-docs
         helm-docs readme charts/docker-registry-ui/ -w
+        helm-docs check charts/docker-registry-ui/
 
     - name: Install Helm
       uses: azure/setup-helm@v1
