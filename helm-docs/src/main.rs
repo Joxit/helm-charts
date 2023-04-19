@@ -3,9 +3,7 @@ use structopt::StructOpt;
 
 mod chart;
 mod commands;
-mod prerequisites;
-mod table;
-mod usage;
+mod readme;
 
 #[derive(Debug, StructOpt)]
 #[structopt(name = "helm-docs", author, about)]
