@@ -21,7 +21,7 @@ fn generate_default_value(line: &str) -> String {
   line.split_once(":").unwrap().1.trim().to_string()
 }
 
-pub fn generate_table(path: PathBuf) -> Result<String> {
+pub fn generate_table(path: &PathBuf) -> Result<String> {
   let mut writer: Vec<u8> = vec![];
   let mut state = 0;
   let mut comment = String::new();

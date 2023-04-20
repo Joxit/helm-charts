@@ -1,4 +1,4 @@
-use crate::readme::generate_readme;
+use crate::readme;
 use anyhow::Result;
 use std::fs::File;
 use std::path::PathBuf;
@@ -15,11 +15,12 @@ pub struct Readme {
 impl Readme {
   pub fn exec(&self) -> Result<()> {
     for directory in &self.directories {
+      let readme = readme::Readme::new(&directory)?;
       if self.write {
         let mut file = File::create(directory.join("README.md"))?;
-        generate_readme(&mut file, &directory)?;
+        readme.write(&mut file)?;
       } else {
-        generate_readme(&mut std::io::stdout(), &directory)?;
+        readme.write(&mut std::io::stdout())?;
       }
     }
     Ok(())

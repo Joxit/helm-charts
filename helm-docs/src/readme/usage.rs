@@ -16,7 +16,7 @@ helm upgrade --install {chart-name} joxit/{chart-name}
 ```
 "#;
 
-pub fn generate_usage(chart: Chart) -> Result<String> {
+pub fn generate_usage(chart: &Chart) -> Result<String> {
   Ok(
     USAGE
       .replace("{chart-name}", &chart.name)
