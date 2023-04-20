@@ -17,10 +17,10 @@ pub fn generate_readme<W: Write>(writer: &mut W, directory: &PathBuf) -> Result<
   writeln!(writer, "# {} Chart", chart.pretty_name)?;
   writeln!(writer, "")?;
   writeln!(writer, "## Prerequisites")?;
-  generate_prerequisites(writer)?;
+  writeln!(writer, "{}", generate_prerequisites()?)?;
   writeln!(writer, "## Usage")?;
-  generate_usage(writer, chart)?;
+  writeln!(writer, "{}", generate_usage(chart)?)?;
   writeln!(writer, "## Configuration")?;
-  generate_table(writer, values)?;
+  write!(writer, "{}", generate_table(values)?)?;
   Ok(())
 }

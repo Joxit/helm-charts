@@ -21,7 +21,8 @@ fn generate_default_value(line: &str) -> String {
   line.split_once(":").unwrap().1.trim().to_string()
 }
 
-pub fn generate_table<W: Write>(writer: &mut W, path: PathBuf) -> Result<()> {
+pub fn generate_table(path: PathBuf) -> Result<String> {
+  let mut writer: Vec<u8> = vec![];
   let mut state = 0;
   let mut comment = String::new();
   let mut key = String::new();
@@ -67,5 +68,7 @@ pub fn generate_table<W: Write>(writer: &mut W, path: PathBuf) -> Result<()> {
       state = 2;
     }
   }
-  Ok(())
+  std::str::from_utf8(&writer)
+    .with_context(|| format!("Failed to create table."))
+    .map(|s| s.to_string())
 }

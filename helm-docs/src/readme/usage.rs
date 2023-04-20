@@ -1,6 +1,5 @@
 use crate::chart::Chart;
-use anyhow::{Context, Result};
-use std::io::Write;
+use anyhow::Result;
 
 const USAGE: &str = r#"
 1. Add my Helm repository (named `joxit`)
@@ -17,13 +16,11 @@ helm upgrade --install {chart-name} joxit/{chart-name}
 ```
 "#;
 
-pub fn generate_usage<W: Write>(writer: &mut W, chart: Chart) -> Result<()> {
-  writeln!(
-    writer,
-    "{}",
+pub fn generate_usage(chart: Chart) -> Result<String> {
+  Ok(
     USAGE
       .replace("{chart-name}", &chart.name)
       .replace("{chart-pretty-name}", &chart.pretty_name)
+      .to_string(),
   )
-  .with_context(|| format!("Failed to write file"))
 }

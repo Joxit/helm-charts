@@ -1,5 +1,4 @@
-use anyhow::{Context, Result};
-use std::io::Write;
+use anyhow::Result;
 
 const PREREQUISITES: &str = r#"
   * **Helm 3.2+** (Helm 2 is not supported)
@@ -7,6 +6,6 @@ const PREREQUISITES: &str = r#"
     It is possible that this chart works with earlier versions but it is untested.
 "#;
 
-pub fn generate_prerequisites<W: Write>(writer: &mut W) -> Result<()> {
-  writeln!(writer, "{}", PREREQUISITES).with_context(|| format!("Failed to write file"))
+pub fn generate_prerequisites() -> Result<String> {
+  Ok(PREREQUISITES.to_string())
 }
