@@ -70,5 +70,5 @@ pub fn generate_table(path: &PathBuf) -> Result<String> {
   }
   std::str::from_utf8(&writer)
     .with_context(|| format!("Failed to create table."))
-    .map(|s| s.to_string())
+    .map(|s| s.trim_matches('\n').to_string())
 }

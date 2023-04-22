@@ -21,6 +21,7 @@ pub fn generate_usage(chart: &Chart) -> Result<String> {
     USAGE
       .replace("{chart-name}", &chart.name)
       .replace("{chart-pretty-name}", &chart.pretty_name)
+      .trim_matches('\n')
       .to_string(),
   )
 }

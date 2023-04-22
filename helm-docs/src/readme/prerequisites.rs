@@ -7,5 +7,5 @@ const PREREQUISITES: &str = r#"
 "#;
 
 pub fn generate_prerequisites() -> Result<String> {
-  Ok(PREREQUISITES.to_string())
+  Ok(PREREQUISITES.trim_matches('\n').to_string())
 }
