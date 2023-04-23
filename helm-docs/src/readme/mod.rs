@@ -3,7 +3,7 @@ use self::table::generate_table;
 use self::usage::generate_usage;
 use crate::chart::Chart;
 use anyhow::Result;
-use regex::{Captures, Regex};
+use regex::{Captures, Match, Regex};
 use std::io::Write;
 use std::path::PathBuf;
 
@@ -40,31 +40,21 @@ impl Readme {
   fn replace_tokens(&self, line: String, captures: Captures) -> Result<String> {
     if let Some(regex_match) = captures.get(1) {
       let raw_match = captures.get(0).unwrap().as_str();
-      return match regex_match.as_str() {
-        "prettyName" => Ok(
-          line
-            .replace(raw_match, self.chart.pretty_name.as_str())
-            .to_string(),
-        ),
-        "prerequisites" => Ok(
-          line
-            .replace(raw_match, generate_prerequisites()?.as_str())
-            .to_string(),
-        ),
-        "usage" => Ok(
-          line
-            .replace(raw_match, generate_usage(&self.chart)?.as_str())
-            .to_string(),
-        ),
-        "configuration" => Ok(
-          line
-            .replace(raw_match, generate_table(&self.values)?.as_str())
-            .to_string(),
-        ),
-        _ => Ok(line),
-      };
+      if let Some(content) = self.content_by_match(&regex_match) {
+        return Ok(line.replace(raw_match, content?.as_str()).to_string());
+      }
     }
     Ok(line)
+  }
+
+  fn content_by_match(&self, regex_match: &Match) -> Option<Result<String>> {
+    match regex_match.as_str() {
+      "prettyName" => Some(Ok(self.chart.pretty_name.clone())),
+      "prerequisites" => Some(generate_prerequisites()),
+      "usage" => Some(generate_usage(&self.chart)),
+      "configuration" => Some(generate_table(&self.values)),
+      _ => None,
+    }
   }
 }
 
