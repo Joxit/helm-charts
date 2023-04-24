@@ -49,7 +49,9 @@ impl Readme {
 
   fn content_by_match(&self, regex_match: &Match) -> Option<Result<String>> {
     match regex_match.as_str() {
+      "name" => Some(Ok(self.chart.name.clone())),
       "prettyName" => Some(Ok(self.chart.pretty_name.clone())),
+      "appVersion" => Some(Ok(self.chart.app_version.clone())),
       "prerequisites" => Some(generate_prerequisites()),
       "usage" => Some(generate_usage(&self.chart)),
       "configuration" => Some(generate_table(&self.values)),
