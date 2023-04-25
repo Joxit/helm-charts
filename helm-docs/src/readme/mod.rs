@@ -2,8 +2,9 @@ use self::prerequisites::generate_prerequisites;
 use self::table::generate_table;
 use self::usage::generate_usage;
 use crate::chart::Chart;
-use anyhow::Result;
+use anyhow::{Context, Result};
 use regex::{Captures, Match, Regex};
+use std::fs;
 use std::io::Write;
 use std::path::PathBuf;
 
@@ -14,6 +15,7 @@ mod usage;
 pub struct Readme {
   chart: Chart,
   values: PathBuf,
+  directory: PathBuf,
 }
 
 impl Readme {
@@ -21,11 +23,12 @@ impl Readme {
     Ok(Self {
       chart: Chart::try_from(directory.join("Chart.yaml"))?,
       values: directory.join("values.yaml"),
+      directory: directory.clone(),
     })
   }
 
   pub fn write<W: Write>(&self, writer: &mut W) -> Result<()> {
-    let template = DEFAULT_TEMPLATE.trim_end();
+    let template = self.get_template_content()?;
     let template_regex = Regex::new(r#"\{\{\s*([a-zA-Z0-9._]+)\s*\}\}"#).unwrap();
 
     for line in template.split("\n") {
@@ -57,6 +60,16 @@ impl Readme {
       "configuration" => Some(generate_table(&self.values)),
       _ => None,
     }
+  }
+
+  fn get_template_content(&self) -> Result<String> {
+    let path = self.directory.join("README.tmpl");
+    let content = if path.exists() {
+      fs::read_to_string(&path).with_context(|| format!("Failed to open {:?}", path))?
+    } else {
+      DEFAULT_TEMPLATE.trim_end().to_string()
+    };
+    Ok(content.trim_matches('\n').to_string())
   }
 }
 
