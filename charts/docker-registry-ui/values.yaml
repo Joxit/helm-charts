@@ -29,7 +29,7 @@ ui:
   # Remove the menu that show the dialogs to add, remove and change the endpoint of your docker registry.
   singleRegistry: true
   # Limit the number of elements in the catalog page.
-  catalogElementsLimit: 100000
+  catalogElementsLimit: 1000
   # Expose custom labels in history page, custom labels will be processed like maintainer label.
   historyCustomLabels: []
   # Update the default Nginx configuration and **set custom headers** for your backend docker registry. Only when `ui.proxy` is used.
