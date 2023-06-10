@@ -14,24 +14,40 @@ ui:
   replicas: 1
   # Title of the registry
   title: "Docker registry UI"
-  # Allow delete of images
-  deleteImages: false
   # UI behave as a proxy of the registry
   proxy: false
   # The URL of your docker registry, may be a service (when proxy is on) or an external URL.
   dockerRegistryUrl: null
   # Override the pull URL
   pullUrl: null
-  # Show number of tags per images on catalog page. This will produce + nb images requests, not recommended on large registries.
-  showCatalogNbTags: false
-  # Show content digest in docker tag list.
-  showContentDigest: false
   # Remove the menu that show the dialogs to add, remove and change the endpoint of your docker registry.
   singleRegistry: true
+  # By default, the UI will check on every requests if your registry is secured or not (you will see `401` responses in your console). Set to `true` if your registry uses Basic Authentication and divide by two the number of call to your registry.
+  registrySecured: false
+
+  # Show number of tags per images on catalog page. This will produce + nb images requests, not recommended on large registries.
+  showCatalogNbTags: false
   # Limit the number of elements in the catalog page.
   catalogElementsLimit: 1000
+  # Expand by default all repositories in catalog
+  catalogDefaultExpanded: false
+  # Set the minimum repository/namespace to expand (e.g. `joxit/docker-registry-ui` `joxit/` is the repository/namespace). Can be 0 to disable branching.
+  catalogMinBranches: 1
+  # Set the maximum repository/namespace to expand (e.g. `joxit/docker-registry-ui` `joxit/` is the repository/namespace). Can be 0 to disable branching.
+  catalogMaxBranches: 1
+
+  # Allow delete of images
+  deleteImages: false
+  # Show content digest in docker tag list.
+  showContentDigest: false
+  # Set the default order for the taglist page, could be `num-asc;alpha-asc`, `num-desc;alpha-asc`, `num-asc;alpha-desc`, `num-desc;alpha-desc`, `alpha-asc;num-asc`, `alpha-asc;num-desc`, `alpha-desc;num-asc` or `alpha-desc;num-desc`.
+  taglistOrder: alpha-asc;num-desc
+  # Set the number of tags to display in one page.
+  taglistPageSize: 100
+
   # Expose custom labels in history page, custom labels will be processed like maintainer label.
   historyCustomLabels: []
+
   # Update the default Nginx configuration and **set custom headers** for your backend docker registry. Only when `ui.proxy` is used.
   # Example:
   # nginxProxyHeaders:
@@ -73,7 +89,7 @@ ui:
     footerNeutralText: ""
 
   # The name and tag of the docker image of the interface
-  image: joxit/docker-registry-ui:2.4.1
+  image: joxit/docker-registry-ui:2.5.0
   # Override default image pull secrets
   imagePullSecrets: "-"
   # Override default pull policy
@@ -132,7 +148,7 @@ registry:
   # Enable the registry server.
   enabled: false
   # The name and tag of the docker registry server image
-  image: registry:2.8.1
+  image: registry:2.8.2
   # Override default image pull secrets
   imagePullSecrets: "-"
   # Override default pull policy

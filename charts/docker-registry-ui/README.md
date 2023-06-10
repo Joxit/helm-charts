@@ -52,14 +52,20 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | --- | --- | --- |
 | `ui.replicas` | `1` | Number of replicas for the Deployment. |
 | `ui.title` | `"Docker registry UI"` | Title of the registry |
-| `ui.deleteImages` | `false` | Allow delete of images |
 | `ui.proxy` | `false` | UI behave as a proxy of the registry |
 | `ui.dockerRegistryUrl` | `null` | The URL of your docker registry, may be a service (when proxy is on) or an external URL. |
 | `ui.pullUrl` | `null` | Override the pull URL |
-| `ui.showCatalogNbTags` | `false` | Show number of tags per images on catalog page. This will produce + nb images requests, not recommended on large registries. |
-| `ui.showContentDigest` | `false` | Show content digest in docker tag list. |
 | `ui.singleRegistry` | `true` | Remove the menu that show the dialogs to add, remove and change the endpoint of your docker registry. |
+| `ui.registrySecured` | `false` | By default, the UI will check on every requests if your registry is secured or not (you will see `401` responses in your console). Set to `true` if your registry uses Basic Authentication and divide by two the number of call to your registry. |
+| `ui.showCatalogNbTags` | `false` | Show number of tags per images on catalog page. This will produce + nb images requests, not recommended on large registries. |
 | `ui.catalogElementsLimit` | `1000` | Limit the number of elements in the catalog page. |
+| `ui.catalogDefaultExpanded` | `false` | Expand by default all repositories in catalog |
+| `ui.catalogMinBranches` | `1` | Set the minimum repository/namespace to expand (e.g. `joxit/docker-registry-ui` `joxit/` is the repository/namespace). Can be 0 to disable branching. |
+| `ui.catalogMaxBranches` | `1` | Set the maximum repository/namespace to expand (e.g. `joxit/docker-registry-ui` `joxit/` is the repository/namespace). Can be 0 to disable branching. |
+| `ui.deleteImages` | `false` | Allow delete of images |
+| `ui.showContentDigest` | `false` | Show content digest in docker tag list. |
+| `ui.taglistOrder` | `alpha-asc;num-desc` | Set the default order for the taglist page, could be `num-asc;alpha-asc`, `num-desc;alpha-asc`, `num-asc;alpha-desc`, `num-desc;alpha-desc`, `alpha-asc;num-asc`, `alpha-asc;num-desc`, `alpha-desc;num-asc` or `alpha-desc;num-desc`. |
+| `ui.taglistPageSize` | `100` | Set the number of tags to display in one page. |
 | `ui.historyCustomLabels` | `[]` | Expose custom labels in history page, custom labels will be processed like maintainer label. |
 | `ui.nginxProxyHeaders` | `[]` | Update the default Nginx configuration and **set custom headers** for your backend docker registry. Only when `ui.proxy` is used. Example: nginxProxyHeaders:  [ { my-heeader-name: my-header-value } ] |
 | `ui.nginxProxyPassHeaders` | `[]` | Update the default Nginx configuration and **forward custom headers** to your backend docker registry. Only when `ui.proxy` is used. Example: nginxProxyPassHeaders: [ my-first-header, my-second-header ] |
@@ -76,7 +82,7 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `ui.theme.footerBackground` | `""` | Custom footer background color for the UI |
 | `ui.theme.footerText` | `""` | Custom footer text color for the UI |
 | `ui.theme.footerNeutralText` | `""` | Custom footer neutral color for the UI (links) |
-| `ui.image` | `joxit/docker-registry-ui:2.4.1` | The name and tag of the docker image of the interface |
+| `ui.image` | `joxit/docker-registry-ui:2.5.0` | The name and tag of the docker image of the interface |
 | `ui.imagePullSecrets` | `"-"` | Override default image pull secrets |
 | `ui.imagePullPolicy` | `"-"` | Override default pull policy |
 | `ui.resources` | `{}` | The resource settings for user interface pod. |
@@ -104,7 +110,7 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | Value | Default | Description |
 | --- | --- | --- |
 | `registry.enabled` | `false` | Enable the registry server. |
-| `registry.image` | `registry:2.8.1` | The name and tag of the docker registry server image |
+| `registry.image` | `registry:2.8.2` | The name and tag of the docker registry server image |
 | `registry.imagePullSecrets` | `"-"` | Override default image pull secrets |
 | `registry.imagePullPolicy` | `"-"` | Override default pull policy |
 | `registry.dataVolume` | `null` | Configuration for the data directory.  When null it will create an emptyDir. |

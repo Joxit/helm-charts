@@ -1,7 +1,7 @@
 apiVersion: v2
 name: docker-registry-ui
-version: 1.0.1
-appVersion: "2.4.1"
+version: 1.1.0
+appVersion: "2.5.0"
 kubeVersion: ">=1.19.0-0"
 description: The simplest and most complete UI for your private registry
 home: https://github.com/Joxit/docker-registry-ui
@@ -17,9 +17,9 @@ annotations:
   artifacthub.io/prerelease: "false"
   artifacthub.io/images: |
     - name: docker-registry-ui
-      image: joxit/docker-registry-ui:2.4.1
+      image: joxit/docker-registry-ui:2.5.0
     - name: registry
-      image: registry:2.8.1
+      image: registry:2.8.2
   artifacthub.io/license: MIT
   artifacthub.io/links: |
     - name: Documentation

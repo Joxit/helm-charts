@@ -78,6 +78,18 @@ spec:
               value: {{ .Values.ui.service.targetPort | quote }}
             - name: USE_CONTROL_CACHE_HEADER
               value: {{ .Values.ui.useControlCacheHeader | quote }}
+            - name: TAGLIST_ORDER
+              value: {{ .Values.ui.taglistOrder | quote }}
+            - name: CATALOG_DEFAULT_EXPANDED
+              value: {{ .Values.ui.catalogDefaultExpanded | quote }}
+            - name: CATALOG_MIN_BRANCHES
+              value: {{ .Values.ui.catalogMinBranches | quote }}
+            - name: CATALOG_MAX_BRANCHES
+              value: {{ .Values.ui.catalogMaxBranches | quote }}
+            - name: TAGLIST_PAGE_SIZE
+              value: {{ .Values.ui.taglistPageSize | quote }}
+            - name: REGISTRY_SECURED
+              value: {{ .Values.ui.registrySecured | quote }}
             - name: THEME
               value: {{ .Values.ui.defaultTheme | quote }}
             - name: THEME_PRIMARY_TEXT
