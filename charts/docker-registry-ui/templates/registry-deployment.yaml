@@ -38,7 +38,7 @@ spec:
               value: {{ printf "%s:%d" "0.0.0.0" (.Values.registry.service.targetPort | int) }}
             {{- range .Values.registry.extraEnv }}
             - name: {{ .name }}
-              value: {{ .value }}
+              value: {{ .value }} | toString
             {{- end }}
           ports:
             - name: http
