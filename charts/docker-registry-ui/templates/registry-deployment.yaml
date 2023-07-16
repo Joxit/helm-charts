@@ -36,9 +36,13 @@ spec:
           env:
             - name: REGISTRY_HTTP_ADDR
               value: {{ printf "%s:%d" "0.0.0.0" (.Values.registry.service.targetPort | int) }}
+            {{- if .Values.ui.deleteImages }}
+            - name: REGISTRY_STORAGE_DELETE_ENABLED
+              value: 'true'
+            {{- end }}
             {{- range .Values.registry.extraEnv }}
-            - name: {{ .name }}
-              value: {{ .value }} | toString
+            - name: {{ .name | quote }}
+              value: {{ .value | quote }}
             {{- end }}
           ports:
             - name: http
