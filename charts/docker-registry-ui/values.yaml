@@ -170,6 +170,10 @@ registry:
   additionalSpec: {}
   # Extra Environmental Variables for Registry
   extraEnv: []
+  # Add Basic Auth to Registry
+  basicAuth:
+    # htpasswd secret name (if null no basic auth will be added)
+    secretName: null
 
   service:
     # Type of service: `LoadBalancer`, `ClusterIP` or `NodePort`. If using `NodePort` service

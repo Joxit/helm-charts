@@ -51,6 +51,11 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/registry
               name: data
+            {{- if .Values.registry.basicAuth.secretName }}
+            - name: htpasswd
+              mountPath: /auth
+              readOnly: true
+            {{- end }}
           resources:
             {{- toYaml .Values.registry.resources | nindent 12 }}
       volumes:
@@ -60,6 +65,11 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
+        {{- if .Values.registry.basicAuth.secretName }}
+        - name: htpasswd
+          secret:
+            secretName: {{ .Values.registry.basicAuth.secretName }}
+        {{- end }}
       {{- with .Values.registry.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
