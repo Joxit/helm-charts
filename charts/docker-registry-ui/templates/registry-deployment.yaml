@@ -40,6 +40,14 @@ spec:
             - name: REGISTRY_STORAGE_DELETE_ENABLED
               value: 'true'
             {{- end }}
+            {{- if .Values.registry.basicAuth.enabled }}
+            - name: REGISTRY_AUTH
+              value: htpasswd
+            - name: REGISTRY_AUTH_HTPASSWD_REALM
+              value: {{ .Values.registry.basicAuth.realm | default "Docker registry"}}
+            - name: REGISTRY_AUTH_HTPASSWD_PATH
+              value: {{ .Values.registry.basicAuth.htpasswdPath | default "/auth/htpasswd" }}
+            {{- end }}
             {{- range .Values.registry.extraEnv }}
             - name: {{ .name | quote }}
               value: {{ .value | quote }}
@@ -51,9 +59,9 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/registry
               name: data
-            {{- if .Values.registry.basicAuth.secretName }}
+            {{- if .Values.registry.basicAuth.enabled }}
             - name: htpasswd
-              mountPath: /auth
+              mountPath: {{ if .Values.registry.basicAuth.htpasswdPath }}{{ dir .Values.registry.basicAuth.htpasswdPath }}{{ else }}{{ "/auth" }}{{ end }}
               readOnly: true
             {{- end }}
           resources:
@@ -65,10 +73,10 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
-        {{- if .Values.registry.basicAuth.secretName }}
+        {{- if .Values.registry.basicAuth.enabled }}
         - name: htpasswd
           secret:
-            secretName: {{ .Values.registry.basicAuth.secretName }}
+            secretName: {{ if .Values.registry.basicAuth.secretName  }}{{ .Values.registry.basicAuth.secretName }}{{ else }}{{ fail "Basic auth secret name is required" }}{{ end }}
         {{- end }}
       {{- with .Values.registry.nodeSelector }}
       nodeSelector:
