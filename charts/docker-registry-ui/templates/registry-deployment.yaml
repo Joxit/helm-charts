@@ -40,13 +40,13 @@ spec:
             - name: REGISTRY_STORAGE_DELETE_ENABLED
               value: 'true'
             {{- end }}
-            {{- if .Values.registry.basicAuth.enabled }}
+            {{- if .Values.registry.auth.basic.enabled }}
             - name: REGISTRY_AUTH
               value: htpasswd
             - name: REGISTRY_AUTH_HTPASSWD_REALM
-              value: {{ .Values.registry.basicAuth.realm | default "Docker registry"}}
+              value: {{ if ne (.Values.registry.auth.basic.realm | toString) "-" }}{{ .Values.registry.auth.basic.realm }}{{ else }}{{ "Docker registry" }}{{ end }}
             - name: REGISTRY_AUTH_HTPASSWD_PATH
-              value: {{ .Values.registry.basicAuth.htpasswdPath | default "/auth/htpasswd" }}
+              value: {{ if ne (.Values.registry.auth.basic.htpasswdPath | toString) "-" }}{{ .Values.registry.auth.basic.htpasswdPath }}{{ else }}{{ "/etc/docker/registry/auth/htpasswd" }}{{ end }}
             {{- end }}
             {{- range .Values.registry.extraEnv }}
             - name: {{ .name | quote }}
@@ -59,9 +59,9 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/registry
               name: data
-            {{- if .Values.registry.basicAuth.enabled }}
+            {{- if .Values.registry.auth.basic.enabled }}
             - name: htpasswd
-              mountPath: {{ if .Values.registry.basicAuth.htpasswdPath }}{{ dir .Values.registry.basicAuth.htpasswdPath }}{{ else }}{{ "/auth" }}{{ end }}
+              mountPath: {{ if ne (.Values.registry.auth.basic.htpasswdPath | toString) "-" }}{{ dir .Values.registry.auth.basic.htpasswdPath }}{{ else }}{{ "/etc/docker/registry/auth" }}{{ end }}
               readOnly: true
             {{- end }}
           resources:
@@ -73,10 +73,10 @@ spec:
           {{- else }}
           emptyDir: {}
           {{- end }}
-        {{- if .Values.registry.basicAuth.enabled }}
+        {{- if .Values.registry.auth.basic.enabled }}
         - name: htpasswd
           secret:
-            secretName: {{ if .Values.registry.basicAuth.secretName  }}{{ .Values.registry.basicAuth.secretName }}{{ else }}{{ fail "Basic auth secret name is required" }}{{ end }}
+            secretName: {{ if .Values.registry.auth.basic.secretName  }}{{ .Values.registry.auth.basic.secretName }}{{ else }}{{ fail "Basic auth secret name is required" }}{{ end }}
         {{- end }}
       {{- with .Values.registry.nodeSelector }}
       nodeSelector:

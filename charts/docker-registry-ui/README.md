@@ -121,10 +121,6 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `registry.annotations` | `{}` | Annotations to apply to the registry server deployment. |
 | `registry.additionalSpec` | `{}` | Optional YAML string that will be appended to the deployment spec. |
 | `registry.extraEnv` | `[]` | Extra Environmental Variables for Registry |
-| `registry.basicAuth.enabled` | `false` | Enable basic auth for Registry.|
-| `registry.basicAuth.realm` | `Docker registry` | Basic auth realm.|
-| `registry.basicAuth.htpasswdPath` | `/auth/htpasswd` | Full path for htpasswd file. Note that filename should match the secret key.|
-| `registry.basicAuth.secretName` | `` | Basic Auth (htpasswd) Secret Name for Registry.|
 | `registry.service.type` | `ClusterIP` | Type of service: `LoadBalancer`, `ClusterIP` or `NodePort`. If using `NodePort` service type, you must set the desired `nodePorts` setting below. |
 | `registry.service.port` | `5000` | Ports that will be exposed on the service |
 | `registry.service.targetPort` | `5000` | The port to listhen on the container. |

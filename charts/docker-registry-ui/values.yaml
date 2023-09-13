@@ -170,16 +170,18 @@ registry:
   additionalSpec: {}
   # Extra Environmental Variables for Registry
   extraEnv: []
-  # Add Basic Auth to Registry.
-  basicAuth:
-    # Enable basic auth for Registry.
-    enabled: false
-    # Basic auth realm.
-    realm: Docker registry
-    # Full path for htpasswd file. Note that filename should match the secret key.
-    htpasswdPath: /auth/htpasswd
-    # htpasswd secret name.
-    secretName: ''
+  # Add authentication to Registry.
+  auth:
+    # Basic authentication
+    basic:
+      # Enable basic auth for Registry.
+      enabled: false
+      # Basic auth realm.
+      realm: Docker registry
+      # Full path for htpasswd file. Note that filename should match the secret key.
+      htpasswdPath: /etc/docker/registry/auth/htpasswd
+      # htpasswd secret name.
+      secretName: ''
 
   service:
     # Type of service: `LoadBalancer`, `ClusterIP` or `NodePort`. If using `NodePort` service
