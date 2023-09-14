@@ -89,7 +89,7 @@ ui:
     footerNeutralText: ""
 
   # The name and tag of the docker image of the interface
-  image: joxit/docker-registry-ui:2.5.0
+  image: joxit/docker-registry-ui:2.5.2
   # Override default image pull secrets
   imagePullSecrets: "-"
   # Override default pull policy
@@ -170,9 +170,8 @@ registry:
   additionalSpec: {}
   # Extra Environmental Variables for Registry
   extraEnv: []
-  # Add authentication to Registry.
+
   auth:
-    # Basic authentication
     basic:
       # Enable basic auth for Registry.
       enabled: false
@@ -180,7 +179,7 @@ registry:
       realm: Docker registry
       # Full path for htpasswd file. Note that filename should match the secret key.
       htpasswdPath: /etc/docker/registry/auth/htpasswd
-      # htpasswd secret name.
+      # htpasswd secret name volume to mount.
       secretName: ''
 
   service:
