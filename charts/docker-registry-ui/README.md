@@ -82,7 +82,7 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `ui.theme.footerBackground` | `""` | Custom footer background color for the UI |
 | `ui.theme.footerText` | `""` | Custom footer text color for the UI |
 | `ui.theme.footerNeutralText` | `""` | Custom footer neutral color for the UI (links) |
-| `ui.image` | `joxit/docker-registry-ui:2.5.0` | The name and tag of the docker image of the interface |
+| `ui.image` | `joxit/docker-registry-ui:2.5.2` | The name and tag of the docker image of the interface |
 | `ui.imagePullSecrets` | `"-"` | Override default image pull secrets |
 | `ui.imagePullPolicy` | `"-"` | Override default pull policy |
 | `ui.resources` | `{}` | The resource settings for user interface pod. |
@@ -121,6 +121,10 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `registry.annotations` | `{}` | Annotations to apply to the registry server deployment. |
 | `registry.additionalSpec` | `{}` | Optional YAML string that will be appended to the deployment spec. |
 | `registry.extraEnv` | `[]` | Extra Environmental Variables for Registry |
+| `registry.auth.basic.enabled` | `false` | Enable basic auth for Registry. |
+| `registry.auth.basic.realm` | `Docker registry` | Basic auth realm. |
+| `registry.auth.basic.htpasswdPath` | `/etc/docker/registry/auth/htpasswd` | Full path for htpasswd file. Note that filename should match the secret key. |
+| `registry.auth.basic.secretName` | `''` | htpasswd secret name volume to mount. |
 | `registry.service.type` | `ClusterIP` | Type of service: `LoadBalancer`, `ClusterIP` or `NodePort`. If using `NodePort` service type, you must set the desired `nodePorts` setting below. |
 | `registry.service.port` | `5000` | Ports that will be exposed on the service |
 | `registry.service.targetPort` | `5000` | The port to listhen on the container. |
