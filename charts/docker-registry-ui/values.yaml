@@ -89,7 +89,7 @@ ui:
     footerNeutralText: ""
 
   # The name and tag of the docker image of the interface
-  image: joxit/docker-registry-ui:2.5.2
+  image: joxit/docker-registry-ui:2.6.0
   # Override default image pull secrets
   imagePullSecrets: "-"
   # Override default pull policy
