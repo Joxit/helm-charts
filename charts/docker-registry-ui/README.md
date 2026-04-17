@@ -82,7 +82,7 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `ui.theme.footerBackground` | `""` | Custom footer background color for the UI |
 | `ui.theme.footerText` | `""` | Custom footer text color for the UI |
 | `ui.theme.footerNeutralText` | `""` | Custom footer neutral color for the UI (links) |
-| `ui.image` | `joxit/docker-registry-ui:2.5.2` | The name and tag of the docker image of the interface |
+| `ui.image` | `joxit/docker-registry-ui:2.6.0` | The name and tag of the docker image of the interface |
 | `ui.imagePullSecrets` | `"-"` | Override default image pull secrets |
 | `ui.imagePullPolicy` | `"-"` | Override default pull policy |
 | `ui.resources` | `{}` | The resource settings for user interface pod. |
