@@ -88,6 +88,7 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `ui.resources` | `{}` | The resource settings for user interface pod. |
 | `ui.nodeSelector` | `{}` | Optional YAML string to specify a nodeSelector config. |
 | `ui.tolerations` | `[]` | Optional YAML string to specify tolerations. |
+| `ui.podDisruptionBudget` | `[]` | Optional YAML string to specify PodDisruptionBudget - needs either `minAvailable` or `maxUnavailable`. |
 | `ui.affinity` | `{}` | This value defines the [affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) for server pods. |
 | `ui.annotations` | `{}` | Annotations to apply to the user interface deployment. |
 | `ui.additionalSpec` | `{}` | Optional YAML string that will be appended to the deployment spec. |
@@ -117,6 +118,7 @@ helm upgrade --install docker-registry-ui joxit/docker-registry-ui
 | `registry.resources` | `{}` | The resource settings for registry server pod. |
 | `registry.nodeSelector` | `{}` | Optional YAML string to specify a nodeSelector config. |
 | `registry.tolerations` | `[]` | Optional YAML string to specify tolerations. |
+| `registry.podDisruptionBudget` | `[]` | Optional YAML string to specify PodDisruptionBudget - needs either `minAvailable` or `maxUnavailable`. |
 | `registry.affinity` | `{}` | This value defines the [affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity) for server pods. |
 | `registry.annotations` | `{}` | Annotations to apply to the registry server deployment. |
 | `registry.additionalSpec` | `{}` | Optional YAML string that will be appended to the deployment spec. |

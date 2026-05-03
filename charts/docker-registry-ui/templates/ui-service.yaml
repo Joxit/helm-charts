@@ -12,7 +12,7 @@ metadata:
 spec:
   selector:
     app.kubernetes.io/component	: user-interface
-    {{- include "docker-registry-ui.labels" . | nindent 4 }}
+    {{- include "docker-registry-ui.selectorLabels" . | nindent 4 }}
   type: {{ .Values.ui.service.type }}
   ports:
     - port: {{ .Values.ui.service.port }}

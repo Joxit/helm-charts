@@ -41,3 +41,11 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 helm.sh/chart: {{ include "docker-registry-ui.chart" . }}
 {{- end -}}
+
+{{/*
+Selector labels
+*/}}
+{{- define "docker-registry-ui.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "docker-registry-ui.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}

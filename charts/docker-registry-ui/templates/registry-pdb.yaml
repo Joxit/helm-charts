@@ -1,0 +1,17 @@
+{{- if .Values.registry.podDisruptionBudget }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "docker-registry-ui.fullname" . }}-registry-server
+  labels:
+    app.kubernetes.io/component: registry-server
+    {{- include "docker-registry-ui.labels" . | nindent 4 }}
+
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: registry-server
+      {{- include "docker-registry-ui.selectorLabels" . | nindent 6 }}
+  {{ toYaml .Values.registry.podDisruptionBudget }}
+{{- end }}
+

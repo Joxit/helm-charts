@@ -11,7 +11,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component	: registry-server
-      {{- include "docker-registry-ui.labels" . | nindent 6 }}
+      {{- include "docker-registry-ui.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
